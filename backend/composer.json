@@ -1,0 +1,10 @@
+{
+    "name": "secretsanta/backend",
+    "authors": [
+        {
+            "name": "tamaragolobic",
+            "email": "tamara.golobic@gmail.com"
+        }
+    ],
+    "require": {}
+}
