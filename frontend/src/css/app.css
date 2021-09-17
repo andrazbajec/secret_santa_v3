@@ -1,0 +1,14 @@
+.main {
+    height: 100vh;
+}
+
+.fullscreenLayout {
+    height: 90%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+}
