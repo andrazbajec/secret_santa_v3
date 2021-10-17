@@ -1,10 +1,27 @@
 {
-    "name": "secretsanta/backend",
-    "authors": [
-        {
-            "name": "tamaragolobic",
-            "email": "tamara.golobic@gmail.com"
-        }
-    ],
-    "require": {}
+  "name": "secretsanta/backend",
+  "authors": [
+    {
+      "name": "andrazbajec",
+      "email": "andraz.bajec27@gmail.com"
+    },
+    {
+      "name": "tamaragolobic",
+      "email": "tamara.golobic@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Controller\\": "./Controller",
+      "Model\\": "./Model",
+      "Exception\\": "./Exception",
+      "Helper\\": "./Helper"
+    }
+  },
+  "require": {
+    "vlucas/phpdotenv": "^5.3",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "nesbot/carbon": "^2.53"
+  }
 }

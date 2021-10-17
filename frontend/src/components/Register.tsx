@@ -25,7 +25,7 @@ const Register = () => {
             .catch((error: any) => {
                 toast({
                     title: 'Could not register',
-                    description: error.message,
+                    description: error.response.data,
                     status: 'error',
                     duration: 3000
                 })
