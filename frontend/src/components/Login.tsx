@@ -18,12 +18,12 @@ const Login = () => {
 
         axios.post(url, formData)
             .then(response => {
-
+                console.log(response.data);
             })
             .catch((error: any) => {
                 toast({
                     title: 'Could not log in',
-                    description: error.message,
+                    description: error.response.data,
                     status: 'error',
                     duration: 3000
                 })
