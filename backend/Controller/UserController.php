@@ -58,4 +58,20 @@ class UserController
 
         return $user->toArray();
     }
+
+    /**
+     * @return array
+     * @throws InvalidDataException
+     */
+    public function authenticate(): array
+    {
+        $userID = $_COOKIE['user-id'] ?? null;
+        $token = $_COOKIE['user-token'] ?? null;
+
+        if (!$userID || !$token) {
+            throw new InvalidDataException('UserID or token not provided!');
+        }
+
+        return (new UserModel())->validateToken($userID, $token);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace Model;
 
+use Carbon\Carbon;
 use Exception\InvalidDataException;
 
 /**
@@ -53,7 +54,7 @@ class UserModel extends AbstractModel
     public function createUser(string $name, string $email, string $username, string $password): UserModel
     {
         $user = $this->databaseController
-                ->select('User', ['*'], ['username' => $username]);
+            ->select('User', ['*'], ['username' => $username]);
 
         if (count($user)) {
             throw new InvalidDataException('Username is already taken!');
@@ -139,5 +140,36 @@ class UserModel extends AbstractModel
         $token->createToken($this->UserID);
 
         $this->Token = $token->Token;
+    }
+
+    /**
+     * @param int    $userID
+     * @param string $token
+     * @return array
+     * @throws InvalidDataException
+     */
+    public function validateToken(int $userID, string $token): array
+    {
+        $tokenData = $this->databaseController
+                ->select(
+                    'UserToken',
+                    ['*'],
+                    ['UserID' => $userID, 'Token' => $token]
+                )[0] ?? [];
+
+        $dateExpiration = $tokenData['DateExpiration'] ?? null;
+
+        if (!count($tokenData) || !$dateExpiration) {
+            throw new InvalidDataException('Invalid userID or token!');
+        }
+
+        $dateExpiration = Carbon::parse($dateExpiration);
+
+        if ($tokenData['DateDeleted'] ?? null || !$dateExpiration->isValid() || $dateExpiration < Carbon::now()) {
+            throw new InvalidDataException('Token has expired!');
+        }
+
+        return (new UserTokenModel())->createToken($userID)
+            ->toArray();
     }
 }

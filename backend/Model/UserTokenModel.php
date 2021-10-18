@@ -14,6 +14,12 @@ use Carbon\Carbon;
  */
 class UserTokenModel extends AbstractModel
 {
+    /** @var array|string[] */
+    public array $fillable = [
+        'Token',
+        'UserID'
+    ];
+
     /**
      * @param int $userID
      * @param int $daysValid
