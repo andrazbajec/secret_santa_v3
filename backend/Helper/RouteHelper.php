@@ -23,7 +23,7 @@ class RouteHelper
     public function index(): array
     {
         $method = $_SERVER['REQUEST_METHOD'] ?? null;
-        $uri = $_SERVER['REQUEST_URI'] ?? null;
+        $uri = $_SERVER['PATH_INFO'] ?? null;
 
         switch ($method) {
             case 'POST':
@@ -32,6 +32,8 @@ class RouteHelper
                         return $this->userController->registerUser();
                     case '/login':
                         return $this->userController->loginUser();
+                    case '/authenticate':
+                        return $this->userController->authenticate();
                 }
         }
 
