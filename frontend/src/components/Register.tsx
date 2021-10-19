@@ -19,8 +19,8 @@ const Register = () => {
         const formData = BaseHelper.buildFormData(getState);
 
         axios.post(url, formData)
-            .then(response => {
-
+            .then(() => {
+                window.location.reload();
             })
             .catch((error: any) => {
                 toast({

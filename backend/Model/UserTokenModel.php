@@ -59,6 +59,12 @@ class UserTokenModel extends AbstractModel
         $this->Token = $token;
         $this->UserID = $userID;
 
+        // Set token to expire in a week
+        $expires = time() + 3600 * 24 * 7;
+
+        setcookie('user-token', $this->Token, $expires);
+        setcookie('user-id', $this->UserID, $expires);
+
         return $this;
     }
 

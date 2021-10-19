@@ -17,8 +17,8 @@ const Login = () => {
         const formData = BaseHelper.buildFormData(getState);
 
         axios.post(url, formData)
-            .then(response => {
-                console.log(response.data);
+            .then(() => {
+                window.location.reload();
             })
             .catch((error: any) => {
                 toast({
