@@ -48,10 +48,11 @@ class UserModel extends AbstractModel
      * @param string $email
      * @param string $username
      * @param string $password
+     * @param bool   $login
      * @return $this
      * @throws InvalidDataException
      */
-    public function createUser(string $name, string $email, string $username, string $password): UserModel
+    public function createUser(string $name, string $email, string $username, string $password, bool $login = false): UserModel
     {
         $user = $this->databaseController
             ->select('User', ['*'], ['username' => $username]);
@@ -66,8 +67,13 @@ class UserModel extends AbstractModel
 
         // Hash password before saving it
         $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->save();
 
-        return $this->save();
+        if ($login) {
+            $this->loginUser($username, $password);
+        }
+
+        return $this;
     }
 
     /**
@@ -89,6 +95,7 @@ class UserModel extends AbstractModel
             throw new InvalidDataException('User does not exist!');
         }
 
+        $this->username = $username;
         $hashedPassword = $user['Password'] ?? '';
 
         if (!password_verify($password, $hashedPassword)) {
