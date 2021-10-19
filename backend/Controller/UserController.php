@@ -36,7 +36,7 @@ class UserController
         }
 
         $user = new UserModel();
-        $user->createUser($name, $email, $username, $password);
+        $user->createUser($name, $email, $username, $password, true);
 
         return $user->toArray();
     }
@@ -67,6 +67,9 @@ class UserController
     {
         $userID = $_COOKIE['user-id'] ?? null;
         $token = $_COOKIE['user-token'] ?? null;
+
+        setcookie('user-id', null, -1);
+        setcookie('user-token', null, -1);
 
         if (!$userID || !$token) {
             throw new InvalidDataException('UserID or token not provided!');
