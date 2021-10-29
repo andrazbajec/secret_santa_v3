@@ -8,6 +8,7 @@ header("Access-Control-Allow-Credentials: true");
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+use Carbon\Carbon;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -18,7 +19,13 @@ $routeHelper = new Helper\RouteHelper();
 try {
     $response = $routeHelper->index();
 } catch (Exception $e) {
-    $response = [$e->getMessage()];
+    $errMessage = $e->getMessage();
+    
+    $now = Carbon::now();
+    $message = sprintf("[%s] %s\n", $now->toDateTimeString(), $errMessage);
+    file_put_contents('error.log', $message, FILE_APPEND);
+    
+    $response = [$errMessage];
 }
 
 echo json_encode($response);
