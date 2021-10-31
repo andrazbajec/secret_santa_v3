@@ -1,12 +1,18 @@
 import './App.css';
 import React, { useEffect, useState }                         from 'react';
 import { Route, Switch, useLocation, withRouter, useHistory } from 'react-router-dom';
-import Login                                                  from './components/Login';
-import Register                                               from './components/Register';
-import NotFound                                               from './views/NotFound';
-import Cookies                                                from 'js-cookie';
-import BaseHelper                                             from './helpers/BaseHelper';
-import axios                                                  from 'axios';
+import Login      from './components/Login';
+import Register   from './components/Register';
+import NotFound   from './views/NotFound';
+import Cookies    from 'js-cookie';
+import BaseHelper from './helpers/BaseHelper';
+import axios      from 'axios';
+import Navbar     from './components/Navbar';
+import CreateRoom from './components/CreateRoom';
+import JoinRoom   from './components/JoinRoom';
+import ShowRooms  from './components/ShowRooms';
+import Home       from './components/Home';
+import Room       from './components/Room';
 
 axios.defaults.withCredentials = true;
 let appLoaded = false;
@@ -85,13 +91,34 @@ const App = () => {
 
     return (
         <div className="App">
+            <Navbar/>
             <Switch>
+                <Route path="/"
+                       component={Home}
+                       exact
+                />
                 <Route path="/login"
                        component={Login}
                        exact
                 />
                 <Route path="/register"
                        component={Register}
+                       exact
+                />
+                <Route path="/naredi-sobo"
+                       component={CreateRoom}
+                       exact
+                />
+                <Route path="/pridruzi-se-sobi"
+                       component={JoinRoom}
+                       exact
+                />
+                <Route path="/pokazi-sobe"
+                       component={ShowRooms}
+                       exact
+                />
+                <Route path="/soba/*"
+                       component={Room}
                        exact
                 />
                 <Route path="*"

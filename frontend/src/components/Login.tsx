@@ -1,13 +1,14 @@
 import { Button, Container, Flex, Heading, Input, InputGroup, Stack, useToast } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { useState } from "react";
-import BaseHelper from "../helpers/BaseHelper";
+import { Link }                                                                 from "react-router-dom";
+import axios                                                                    from "axios";
+import { useState }                                                             from "react";
+import BaseHelper                                                               from "../helpers/BaseHelper";
+import { LoginState }                                                           from "../interfaces/LoginInterface";
 
 const Login = () => {
     const toast = useToast();
 
-    const [getState, setState] = useState({
+    const [getState, setState] = useState<LoginState>({
         username: '',
         password: ''
     });
@@ -26,8 +27,14 @@ const Login = () => {
                     description: error.response.data,
                     status: 'error',
                     duration: 3000
-                })
+                });
             });
+    }
+
+    function checkKeyPress(event: any) {
+        if (event.keyCode === 13) {
+            login();
+        }
     }
 
     return (
@@ -40,16 +47,20 @@ const Login = () => {
                             <Input placeholder="Uporabniško ime"
                                    type="text"
                                    name="username"
+                                   required
                                    value={getState.username}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'username')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <InputGroup>
                             <Input placeholder="Geslo"
                                    type="password"
                                    name="password"
+                                   required
                                    value={getState.password}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <Button colorScheme="green"

@@ -33,4 +33,12 @@ class AbstractModel
 
         return $data;
     }
+
+    /**
+     * @return string
+     */
+    public function getLastID(): string
+    {
+        return $this->databaseController->lastInsertID();
+    }
 }
