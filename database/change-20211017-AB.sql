@@ -11,7 +11,7 @@ VALUES ('Admin'),
 CREATE TABLE User
 (
     UserID      INT PRIMARY KEY AUTO_INCREMENT,
-    Username    TEXT UNICODE,
+    Username    TEXT UNIQUE,
     Name        TEXT,
     Password    TEXT,
     Email       TEXT UNIQUE,

@@ -28,8 +28,14 @@ const Register = () => {
                     description: error.response.data,
                     status: 'error',
                     duration: 3000
-                })
+                });
             });
+    }
+
+    function checkKeyPress(event: any) {
+        if (event.keyCode === 13) {
+            register();
+        }
     }
 
     return (
@@ -42,32 +48,40 @@ const Register = () => {
                             <Input placeholder="Ime"
                                    type="text"
                                    name="name"
+                                   required
                                    value={getState.name}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'name')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <InputGroup>
                             <Input placeholder="Email"
                                    type="email"
                                    name="name"
+                                   required
                                    value={getState.email}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'email')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <InputGroup>
                             <Input placeholder="Uporabniško ime"
                                    type="text"
                                    name="username"
+                                   required
                                    value={getState.username}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'username')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <InputGroup>
                             <Input placeholder="Geslo"
                                    type="password"
                                    name="password"
+                                   required
                                    value={getState.password}
                                    onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
+                                   onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
                         <Button colorScheme="green"

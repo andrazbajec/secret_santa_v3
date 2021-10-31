@@ -34,10 +34,10 @@ class DatabaseController
     }
 
     /**
-     * @param string $table
+     * @param string         $table
      * @param array|string[] $columns
-     * @param array $conditions
-     * @param array $joins
+     * @param array          $conditions
+     * @param array          $joins
      * @return array
      */
     public function select(string $table, array $columns = ['*'], array $conditions = [], array $joins = []): array
@@ -110,14 +110,14 @@ class DatabaseController
 
     /**
      * @param string $table
-     * @param array $data
+     * @param array  $data
      */
     public function insert(string $table, array $data): void
     {
         $values = '';
         $params = [];
         foreach ($data as $key => $value) {
-            $values = sprintf('%s:%s%s', $values, $key, $value != end($data) ? ', ' : '');
+            $values = sprintf('%s%s:%s', $values, $values ? ',' : '', $key);
             $params[$key] = $value;
         }
 
@@ -131,8 +131,8 @@ class DatabaseController
 
     /**
      * @param string $table
-     * @param array $data
-     * @param array $conditions
+     * @param array  $data
+     * @param array  $conditions
      */
     public function update(string $table, array $data, array $conditions): void
     {
@@ -173,5 +173,13 @@ class DatabaseController
         $stmt = $this->db
             ->prepare($sql);
         $stmt->execute($params);
+    }
+
+    /**
+     * @return string
+     */
+    public function lastInsertID(): string
+    {
+        return $this->db->lastInsertId();
     }
 }
