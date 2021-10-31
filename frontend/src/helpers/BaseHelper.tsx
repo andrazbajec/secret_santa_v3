@@ -29,12 +29,17 @@ class BaseHelper {
     }
 
     public static inputChange(event: ChangeEvent, setState: any, getState: any, key: string): void {
-        const newState = { ...getState };
+        const newState = {...getState};
         // @ts-ignore
         newState[key] = event.currentTarget.value;
         setState(newState);
     }
 
+    public static toggleCheckbox(getState: any, setState: any, key: string): void {
+        const newState = {...getState};
+        newState[key] = !newState[key];
+        setState(newState);
+    }
 }
 
 export default BaseHelper
