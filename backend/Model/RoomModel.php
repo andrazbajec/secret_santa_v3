@@ -3,7 +3,6 @@
 namespace Model;
 
 use Exception\InvalidDataException;
-use Exception\UnauthorizedException;
 
 /**
  * @property int     RoomID
@@ -49,7 +48,8 @@ class RoomModel extends AbstractModel
         'RoomID',
         'Rules',
         'MaxAmount',
-        'DateOfExchange'
+        'DateOfExchange',
+        'UserID',
     ];
 
     /**
@@ -87,15 +87,16 @@ class RoomModel extends AbstractModel
         } while ($roomUrlIsNotUnique);
 
         $this->title = $title;
-        $this->shouldJoin = $shouldJoin;
         $this->isPrivate = $isPrivate;
         $this->maxAmount = $maxAmount;
         $this->dateOfExchange = $dateOfExchange;
         $this->rules = $rules;
         $this->userId = $userID;
+
         if ($password) {
             $this->password = password_hash($password, PASSWORD_DEFAULT);
         }
+
         $this->roomUrl = $roomUrl;
         $this->save();
 
@@ -155,7 +156,6 @@ class RoomModel extends AbstractModel
         $roomData = [
             'Title' => $this->title,
             'Password' => $this->password ?? null,
-            'ShouldJoin' => $this->shouldJoin ?? null,
             'IsPrivate' => $this->isPrivate ?? null,
             'MaxAmount' => $this->maxAmount ?? null,
             'DateOfExchange' => $this->dateOfExchange ?? null,
@@ -214,5 +214,32 @@ class RoomModel extends AbstractModel
         }
 
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRoomList(): array
+    {
+        $sql = '
+            SELECT R.RoomID, R.Title, R.RoomUrl, COUNT(RU.UserID) Users, U.Username Author
+            FROM RoomUser RU
+                     INNER JOIN Room R ON RU.RoomID = R.RoomID
+                     INNER JOIN User U on R.UserID = U.UserID
+            GROUP BY RU.RoomID;
+        ';
+
+        return $this->databaseController
+            ->raw($sql);
+    }
+
+    /**
+     * @param int $roomID
+     * @return array
+     */
+    public function load(int $roomID): array
+    {
+        return $this->databaseController
+            ->select('Room', ['*'], ['RoomID' => $roomID])[0];
     }
 }

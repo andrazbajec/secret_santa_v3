@@ -47,10 +47,10 @@ const Navbar = () => {
                     </Link>
                     <Link href='/pokazi-sobe'>
                         <Button variant='ghost'
-                                aria-label='Pokazi Sobe'
+                                aria-label='Seznam sob'
                                 my={5}
                                 w='100%'>
-                            Pokazi Sobe
+                            Seznam sob
                         </Button>
                     </Link>
                     <Link href='/logout'>

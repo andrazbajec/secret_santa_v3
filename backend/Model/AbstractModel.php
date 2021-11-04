@@ -26,9 +26,7 @@ class AbstractModel
         foreach ($this->fillable as $key) {
             $value = $this->$key ?? null;
 
-            if ($value) {
-                $data[$key] = $value;
-            }
+            $data[$key] = $value;
         }
 
         return $data;
