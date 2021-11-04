@@ -47,6 +47,11 @@ class RouteHelper
                     case '/room':
                         return $this->roomController->getData();
                 }
+            case 'GET':
+                switch ($uri) {
+                    case '/room-list':
+                        return $this->roomController->getRoomList();
+                }
         }
 
         throw new NotFoundException('Route not found!');

@@ -73,4 +73,19 @@ class RoomController
 
         return $roomData;
     }
+
+    /**
+     * @return array
+     * @throws InvalidDataException
+     */
+    public function getRoomList(): array
+    {
+        $userID = $_COOKIE['user-id'] ?? null;
+
+        if (!$userID) {
+            throw new InvalidDataException('User ID was not provided!');
+        }
+
+        return (new RoomModel())->getRoomList();
+    }
 }

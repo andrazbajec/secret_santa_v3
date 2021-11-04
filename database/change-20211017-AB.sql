@@ -11,10 +11,10 @@ VALUES ('Admin'),
 CREATE TABLE User
 (
     UserID      INT PRIMARY KEY AUTO_INCREMENT,
-    Username    TEXT UNIQUE,
+    Username    VARCHAR(20) UNIQUE,
     Name        TEXT,
     Password    TEXT,
-    Email       TEXT UNIQUE,
+    Email       VARCHAR(50) UNIQUE,
     RoleID      INT,
     DateCreated DATETIME   DEFAULT NOW(),
     DateUpdated DATETIME   DEFAULT NOW(),
