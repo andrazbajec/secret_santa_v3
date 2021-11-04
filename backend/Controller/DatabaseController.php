@@ -182,4 +182,18 @@ class DatabaseController
     {
         return $this->db->lastInsertId();
     }
+
+    /**
+     * @param string $sql
+     * @param array  $params
+     * @return array
+     */
+    public function raw(string $sql, array $params = []): array
+    {
+        $stmt = $this->db
+            ->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll() ?: [];
+    }
 }

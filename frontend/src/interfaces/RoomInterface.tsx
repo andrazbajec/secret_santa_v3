@@ -15,14 +15,47 @@ export interface JoinRoomState {
 
 export interface RoomDB {
     title: string;
-    roomUrl: string;
+    roomUrl: number | null;
+    roomID: number | null;
     users: User[];
     isNamePicked: boolean;
     rules: string;
-    dateOfExchange: string;
-    maxAmount: number | '';
+    dateOfExchange: string | null;
+    maxAmount: number | null;
+    pickedUser: PickedUserData | null;
 }
 
 interface User {
     user: string;
+}
+
+export interface RoomListDB {
+    rooms: RoomListDBElement[];
+}
+
+export interface RoomListDBElement {
+    RoomID: number;
+    Title: string;
+    RoomUrl: number;
+    Users: number;
+    Author: string;
+}
+
+export interface RoomDataResponse {
+    DateCreated: string;
+    DateOfExchange: string | null;
+    MaxAmount: number | null;
+    RoomID: number;
+    RoomUrl: number;
+    RoomUsers: User[];
+    Rules: string;
+    Title: string;
+    UserID: number;
+    PickedUser: PickedUserData | null;
+}
+
+interface PickedUserData {
+    UserID: number;
+    Username: string;
+    Name: string;
 }
