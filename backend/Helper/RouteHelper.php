@@ -46,6 +46,13 @@ class RouteHelper
                         return $this->roomController->joinRoom();
                     case '/room':
                         return $this->roomController->getData();
+                    case '/generate-room':
+                        return $this->roomController->generateRoom();
+                }
+            case 'GET':
+                switch ($uri) {
+                    case '/room-list':
+                        return $this->roomController->getRoomList();
                 }
         }
 

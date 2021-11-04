@@ -10,10 +10,10 @@ import {
     FormLabel,
     useToast
 }                          from "@chakra-ui/react";
-import BaseHelper          from "../helpers/BaseHelper";
+import BaseHelper          from "../../helpers/BaseHelper";
 import { useState }        from "react";
 import axios               from "axios";
-import { CreateRoomState } from "../interfaces/RoomInterface";
+import { CreateRoomState } from "../../interfaces/RoomInterface";
 
 const CreateRoom = () => {
     const toast = useToast();

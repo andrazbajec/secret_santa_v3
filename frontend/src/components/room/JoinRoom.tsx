@@ -1,8 +1,8 @@
 import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, Stack, useToast } from "@chakra-ui/react";
-import BaseHelper                                                                          from "../helpers/BaseHelper";
+import BaseHelper                                                                          from "../../helpers/BaseHelper";
 import { useState }                                                                        from "react";
 import axios                                                                               from "axios";
-import { JoinRoomState }                                                                   from "../interfaces/RoomInterface";
+import { JoinRoomState }                                                                   from "../../interfaces/RoomInterface";
 
 const JoinRoom = () => {
     const toast = useToast();

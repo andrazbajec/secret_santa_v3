@@ -18,8 +18,8 @@ const Home = () => {
                         <h1>
                             {
                                 !getState.showInstructions
-                                    ? <h1>Pokaži</h1>
-                                    : <h1>Skrij</h1>
+                                    ? 'Pokaži'
+                                    : 'Skrij'
                             }
                             Navodila
                         </h1>

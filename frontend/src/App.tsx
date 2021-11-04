@@ -8,11 +8,11 @@ import Cookies    from 'js-cookie';
 import BaseHelper from './helpers/BaseHelper';
 import axios      from 'axios';
 import Navbar     from './components/Navbar';
-import CreateRoom from './components/CreateRoom';
-import JoinRoom   from './components/JoinRoom';
-import ShowRooms  from './components/ShowRooms';
-import Home       from './components/Home';
-import Room       from './components/Room';
+import CreateRoom from './components/room/CreateRoom';
+import JoinRoom from './components/room/JoinRoom';
+import RoomList from './components/room/RoomList';
+import Room     from './components/room/Room';
+import Home      from './components/Home';
 
 axios.defaults.withCredentials = true;
 let appLoaded = false;
@@ -114,7 +114,7 @@ const App = () => {
                        exact
                 />
                 <Route path="/pokazi-sobe"
-                       component={ShowRooms}
+                       component={RoomList}
                        exact
                 />
                 <Route path="/soba/*"
