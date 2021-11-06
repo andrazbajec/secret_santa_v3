@@ -48,7 +48,12 @@ class RouteHelper
                         return $this->roomController->getData();
                     case '/generate-room':
                         return $this->roomController->generateRoom();
+                    case '/send-reset-password-email':
+                        return $this->userController->sendResetPasswordEmail();
+                    case '/reset-password':
+                        return $this->userController->resetPassword();
                 }
+                break;
             case 'GET':
                 switch ($uri) {
                     case '/room-list':

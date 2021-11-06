@@ -6,7 +6,6 @@ import {
     Input,
     InputGroup,
     Stack,
-    Checkbox,
     FormLabel,
     useToast, InputLeftElement
 }                          from "@chakra-ui/react";

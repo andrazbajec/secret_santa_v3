@@ -33,7 +33,7 @@ class UserTokenModel extends AbstractModel
 
         $this->invalidateUserTokens($userID);
 
-        $dateExpiration = Carbon::now()
+        $dateExpiration = Carbon::now('CET')
             ->addDays($daysValid)
             ->toDateTimeString();
 
@@ -76,7 +76,7 @@ class UserTokenModel extends AbstractModel
         $this->databaseController
             ->update(
                 'UserToken',
-                ['DateDeleted' => Carbon::now()->toDateTimeString()],
+                ['DateDeleted' => Carbon::now('CET')->toDateTimeString()],
                 ['UserID' => $userID]
             );
     }

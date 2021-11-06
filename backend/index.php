@@ -21,7 +21,7 @@ try {
 } catch (Exception $e) {
     $errMessage = $e->getMessage();
     
-    $now = Carbon::now();
+    $now = Carbon::now('CET');
     $message = sprintf("[%s] %s\n", $now->toDateTimeString(), $errMessage);
     file_put_contents('error.log', $message, FILE_APPEND);
     

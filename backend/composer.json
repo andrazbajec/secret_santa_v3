@@ -15,13 +15,15 @@
       "Controller\\": "./Controller",
       "Model\\": "./Model",
       "Exception\\": "./Exception",
-      "Helper\\": "./Helper"
+      "Helper\\": "./Helper",
+      "Enum\\": "./Enum"
     }
   },
   "require": {
     "vlucas/phpdotenv": "^5.3",
     "ext-pdo": "*",
     "ext-json": "*",
-    "nesbot/carbon": "^2.53"
+    "nesbot/carbon": "^2.53",
+    "ext-curl": "*"
   }
 }

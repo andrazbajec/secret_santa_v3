@@ -1,8 +1,8 @@
 import '../src/css/app.scss';
 import React, { useEffect, useState }                         from 'react';
 import { Route, Switch, useLocation, withRouter, useHistory } from 'react-router-dom';
-import Login                                                  from './components/Login';
-import Register                                               from './components/Register';
+import Login                                                  from './components/authentication/Login';
+import Register                                               from './components/authentication/Register';
 import NotFound                                               from './views/NotFound';
 import Cookies                                                from 'js-cookie';
 import BaseHelper                                             from './helpers/BaseHelper';
@@ -14,6 +14,8 @@ import RoomList                                               from './components
 import Room                                                   from './components/room/Room';
 import Home                                                   from './components/Home';
 import Instructions                                           from './components/Instructions';
+import ResetPassword                                          from './components/authentication/ResetPassword';
+import ResetPasswordApply                                     from './components/authentication/ResetPasswordApply';
 
 axios.defaults.withCredentials = true;
 let appLoaded = false;
@@ -69,14 +71,14 @@ const App = () => {
             return;
         }
 
-        if (['/login', '/register'].includes(location.pathname)) {
+        if (['/login', '/register', '/send-reset-password'].includes(location.pathname) || location.pathname.match(/\/reset-password\/[0-9]*/)) {
             if (getUserState.authenticated) {
                 history.push('/');
             }
         } else if (location.pathname === '/logout') {
             Cookies.remove('user-id');
             Cookies.remove('user-token');
-            window.location.pathname = '/login'
+            window.location.pathname = '/login';
         } else if (!getUserState.authenticated) {
             history.push('/login');
         }
@@ -136,10 +138,23 @@ const App = () => {
                            component={Instructions}
                            exact
                     />
-                    <Route path="*"
-                           component={NotFound}
-                    />
-                </Switch>
+                <Route path="/send-reset-password"
+                       component={ResetPasswordApply}
+                       exact
+                />
+                <Route path="/reset-password/:token"
+                       component={ResetPassword}
+                       exact
+                />
+                <Route path="/logout"
+                       exact
+                >
+                    Logging out...
+                </Route>
+                <Route path="*"
+                       component={NotFound}
+                />
+            </Switch>
             </div>
         </div>
     );
