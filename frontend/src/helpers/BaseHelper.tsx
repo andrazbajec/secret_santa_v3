@@ -44,6 +44,12 @@ class BaseHelper {
         newState[key] = !newState[key];
         setState(newState);
     }
+
+    public static validateSubmit(event: any, callback: any): void {
+        if (event.keyCode === 13) {
+            callback();
+        }
+    }
 }
 
 export default BaseHelper

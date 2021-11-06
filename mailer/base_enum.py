@@ -1,0 +1,2 @@
+class BaseEnum:
+    HTTP_RESPONSE_CODE_UNAUTHORIZED = 401

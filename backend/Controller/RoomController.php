@@ -142,7 +142,7 @@ class RoomController
 
         $db->update(
             'Room',
-            ['Status' => 'in progress', 'DateUpdated' => Carbon::now()->toDateTimeString()],
+            ['Status' => 'in progress', 'DateUpdated' => Carbon::now('CET')->toDateTimeString()],
             ['RoomID' => $roomID]
         );
 
