@@ -1,78 +1,81 @@
-import { Button, Flex, Link } from "@chakra-ui/react";
+import { Button, DrawerBody, DrawerContent, DrawerHeader, Link, Drawer, useDisclosure } from "@chakra-ui/react";
 
-const Navbar = () => {
+function Navbar(props: any) {
+    const {isOpen, onOpen, onClose} = useDisclosure()
+
     return (
-        <Flex>
-            <Flex>
-                <Flex>
-                    <Link href='/'>
-                        <Button variant='ghost'
-                                aria-label='Domov'
-                                my={5}
-                                w='100%'>
-                            Domov
-                        </Button>
-                    </Link>
-                    <Link href='/register'>
-                        <Button variant='ghost'
-                                aria-label='Register'
-                                my={5}
-                                w='100%'>
-                            Register
-                        </Button>
-                    </Link>
-                    <Link href='/login'>
-                        <Button variant='ghost'
-                                aria-label='Login'
-                                my={5}
-                                w='100%'>
-                            Login
-                        </Button>
-                    </Link>
-                    <Link href='/naredi-sobo'>
-                        <Button variant='ghost'
-                                aria-label='Naredi Sobo'
-                                my={5}
-                                w='100%'>
-                            Naredi Sobo
-                        </Button>
-                    </Link>
-                    <Link href='/pridruzi-se-sobi'>
-                        <Button variant='ghost'
-                                aria-label='Pridruzi Se Sobi'
-                                my={5}
-                                w='100%'>
-                            Pridruzi Se Sobi
-                        </Button>
-                    </Link>
-                    <Link href='/pokazi-sobe'>
-                        <Button variant='ghost'
-                                aria-label='Seznam sob'
-                                my={5}
-                                w='100%'>
-                            Seznam sob
-                        </Button>
-                    </Link>
-                    <Link href='/logout'>
-                        <Button variant='ghost'
-                                aria-label='Izpisi se'
-                                my={5}
-                                w='100%'>
-                            Izpisi se
-                        </Button>
-                    </Link>
-                    <Link href='/soba/*'>
-                        <Button variant='ghost'
-                                aria-label='Soba'
-                                my={5}
-                                w='100%'>
-                            Soba
-                        </Button>
-                    </Link>
-                </Flex>
-            </Flex>
-        </Flex>
-    );
+        <>
+            <Button colorScheme="black"
+                    onClick={onOpen}
+                    id="open-navbar"
+            >
+                {
+                    !isOpen
+                        ? <i className="fal fa-bars"/>
+                        : null
+                }
+            </Button>
+            <Drawer placement='left'
+                    onClose={onClose}
+                    isOpen={isOpen}
+            >
+                <DrawerContent>
+                    <DrawerHeader borderBottomWidth="1px">
+                        Secret Santa
+                    </DrawerHeader>
+                    <DrawerBody>
+                        {
+                            !props.authenticated
+                                ? <div>
+                                    <p>
+                                        <Link href='/register'>
+                                            <i className="fal fa-user-plus"/> Registriraj se
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/login'>
+                                            <i className="fal fa-sign-in"/> Vpiši se
+                                        </Link>
+                                    </p>
+                                </div>
+                                : <div>
+                                    <p>
+                                        <Link href='/'>
+                                            <i className="fal fa-home-lg-alt"/> Domov
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/naredi-sobo'>
+                                            <i className="fal fa-plus-square"/> Naredi Sobo
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/pridruzi-se-sobi'>
+                                            <i className="fal fa-arrow-square-right"/> Pridruzi Se Sobi
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/pokazi-sobe'>
+                                            <i className="fal fa-list-ul"/> Seznam Sob
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/navodila'>
+                                            <i className="fal fa-info-square"/> Navodila
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link href='/logout'>
+                                            <i className="fal fa-sign-out"/> Izpisi se
+                                        </Link>
+                                    </p>
+                                </div>
+                        }
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
+        </>
+    )
 }
 
 export default Navbar;

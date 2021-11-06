@@ -23,6 +23,10 @@ class BaseHelper {
             if (['string', 'number'].includes(typeof value)) {
                 formData.append(key, value);
             }
+
+            if (typeof value === 'boolean') {
+                formData.append(key, value ? '1' : '0')
+            }
         }
 
         return formData;

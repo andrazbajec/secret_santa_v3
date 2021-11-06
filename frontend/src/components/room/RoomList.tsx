@@ -1,10 +1,9 @@
-import { Container, Table, Thead, Tr, Th, Tbody, Button, Td } from '@chakra-ui/react';
-import { Link }                                               from "react-router-dom";
-import { useEffect, useState }                            from 'react';
-import axios                                              from 'axios';
-import BaseHelper                                         from '../../helpers/BaseHelper';
-import { RoomListDB, RoomListDBElement }                  from '../../interfaces/RoomInterface';
-import { LinkIcon }                                       from '@chakra-ui/icons';
+import { Container, Button, InputGroup, Grid, Flex, GridItem } from '@chakra-ui/react';
+import { Link }                                                from "react-router-dom";
+import { useEffect, useState }                                 from 'react';
+import axios                                                   from 'axios';
+import BaseHelper                                              from '../../helpers/BaseHelper';
+import { RoomListDB, RoomListDBElement }                       from '../../interfaces/RoomInterface';
 
 const RoomList = () => {
     const [getState, setState] = useState<RoomListDB>({
@@ -26,34 +25,51 @@ const RoomList = () => {
 
     return (
         <div>
-            <Table>
-                <Thead>
-                    <Tr>
-                        <Th textAlign="center">Ime</Th>
-                        <Th textAlign="center">Avtor</Th>
-                        <Th textAlign="center">Število uporabnikov</Th>
-                        <Th/>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {
-                        getState.rooms.map((room, idx) => (
-                            <Tr key={`room-${idx}`}>
-                                <Td w="30%">{room.Title}</Td>
-                                <Td w="30%">{room.Author}</Td>
-                                <Td w="30%" textAlign="center">{room.Users}</Td>
-                                <Td textAlign="right">
-                                    <Link to={`/soba/${room.RoomUrl}`}>
-                                        <LinkIcon color="teal"
-                                                  _hover={{color: 'teal.400'}}
-                                        />
-                                    </Link>
-                                </Td>
-                            </Tr>
-                        ))
-                    }
-                </Tbody>
-            </Table>
+            <Flex align='center' h='100vh'>
+                <Container className='scroll roomList-container'>
+                    <Grid templateColumns={{
+                        base: "repeat(2, 1fr)",
+                        sm: "repeat(3, 1fr)",
+                        lg: "repeat(4, 1fr)",
+                        xl: "repeat(5, 1fr)"
+                    }} gap={3}>
+                        {
+                            getState.rooms.map(room => (
+                                <GridItem className="card"
+                                          key={room.RoomUrl}
+                                >
+                                    <div className="face back">
+                                        <div className="card-content">
+                                            <h2>
+                                                {room.Author}
+                                            </h2>
+                                            <p>
+                                                <i className="fas fa-users"/> {room.Users}
+                                            </p>
+                                            <p>
+                                                <i className="fas fa-lock"/>
+                                            </p>
+                                        </div>
+                                        <Link to={`/soba/${room.RoomUrl}`} className="open-room">
+                                            <Button colorScheme="green"
+                                                    variant="outline"
+                                                    w="100%"
+                                            >
+                                                Odpri sobo
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                    <div className="face front">
+                                        <h2>
+                                            {room.Title}
+                                        </h2>
+                                    </div>
+                                </GridItem>
+                            ))
+                        }
+                    </Grid>
+                </Container>
+            </Flex>
         </div>
     );
 }

@@ -30,7 +30,7 @@ class RoomController
         }
 
         $room = new RoomModel();
-        $room->createRoom($title, $userID, $password, $shouldJoin, $isPrivate, $maxAmount, $dateOfExchange, $rules, true);
+        $room->createRoom($title, $userID, $password, $isPrivate, $maxAmount, $dateOfExchange, $rules, $shouldJoin);
 
         return $room->toArray();
     }

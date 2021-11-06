@@ -8,7 +8,7 @@ import {
     Stack,
     Checkbox,
     FormLabel,
-    useToast
+    useToast, InputLeftElement
 }                          from "@chakra-ui/react";
 import BaseHelper          from "../../helpers/BaseHelper";
 import { useState }        from "react";
@@ -31,6 +31,16 @@ const CreateRoom = () => {
     const createRoom = () => {
         const url = BaseHelper.generateUrl('create-room');
         const formData = BaseHelper.buildFormData(getState);
+
+        if (!getState.title) {
+            toast({
+                title: 'Soba ni bila narejena',
+                description: 'Vpišite ime sobe.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
 
         axios.post(url, formData)
             .then((res: any) => {
@@ -65,6 +75,9 @@ const CreateRoom = () => {
                             Ime Sobe *
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-text"/>}
+                            />
                             <Input placeholder='Ime sobe'
                                    type='text'
                                    name='title'
@@ -78,6 +91,9 @@ const CreateRoom = () => {
                             Geslo
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-lock"/>}
+                            />
                             <Input placeholder='Geslo'
                                    type='password'
                                    name='password'
@@ -90,6 +106,9 @@ const CreateRoom = () => {
                             Pravila
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-ellipsis-h"/>}
+                            />
                             <Input placeholder='Pravila'
                                    type='text'
                                    name='rules'
@@ -102,6 +121,9 @@ const CreateRoom = () => {
                             Datum Obdarovanja
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="fad fa-calendar"/>}
+                            />
                             <Input placeholder='Datum Obdarovanja'
                                    type='date'
                                    name='dateOfExchange'
@@ -114,6 +136,9 @@ const CreateRoom = () => {
                             Max Denarja
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-euro-sign"/>}
+                            />
                             <Input placeholder='Max Denarja'
                                    type='number'
                                    name='maxAmount'
@@ -122,20 +147,42 @@ const CreateRoom = () => {
                                    onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
-                        <Checkbox size="md"
-                                  colorScheme="green"
-                                  onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
-                        >
-                            Privat soba
-                        </Checkbox>
-                        <Checkbox size="md"
-                                  colorScheme="green"
-                                  onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
-                        >
-                            Sodeluj
-                        </Checkbox>
+                        <InputGroup className='checkboxes'>
+                            <div className='d-flex float-left'>
+                                <FormLabel htmlFor='shouldJoin'
+                                           className='checkbox-label'
+                                >
+                                    Sodeluj
+                                </FormLabel>
+                                <label>
+                                    <Input type='checkbox'
+                                           id='shouldJoin'
+                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
+                                    />
+                                    <span/>
+                                    <i className='indicator'/>
+                                </label>
+                            </div>
+                            <div className='d-flex float-right'>
+                                <FormLabel htmlFor='isPrivate'
+                                           className='checkbox-label'
+                                >
+                                    Privat soba
+                                </FormLabel>
+                                <label>
+                                    <Input type='checkbox'
+                                           id='isPrivate'
+                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
+                                    />
+                                    <span/>
+                                    <i className='indicator'/>
+                                </label>
+                            </div>
+                            <div className='clear-both'/>
+                        </InputGroup>
                         <Button colorScheme='green'
                                 variant='outline'
+                                type='submit'
                                 onClick={createRoom}
                         >
                             Naredi sobo

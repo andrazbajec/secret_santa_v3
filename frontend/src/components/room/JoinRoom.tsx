@@ -1,8 +1,8 @@
-import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, Stack, useToast } from "@chakra-ui/react";
-import BaseHelper                                                                          from "../../helpers/BaseHelper";
-import { useState }                                                                        from "react";
-import axios                                                                               from "axios";
-import { JoinRoomState }                                                                   from "../../interfaces/RoomInterface";
+import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
+import BaseHelper                                                                                            from "../../helpers/BaseHelper";
+import { useState }                                                                                          from "react";
+import axios                                                                                                 from "axios";
+import { JoinRoomState }                                                                                     from "../../interfaces/RoomInterface";
 
 const JoinRoom = () => {
     const toast = useToast();
@@ -15,6 +15,16 @@ const JoinRoom = () => {
     const joinRoom = () => {
         const url = BaseHelper.generateUrl('join-room');
         const formData = BaseHelper.buildFormData(getState);
+
+        if (!getState.roomUrl) {
+            toast({
+                title: 'Ne morete se pridružiti sobi',
+                description: 'Vpišite kodo sobe.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
 
         axios.post(url, formData)
             .then((res: any) => {
@@ -49,6 +59,9 @@ const JoinRoom = () => {
                             Koda Sobe *
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-hashtag"/>}
+                            />
                             <Input placeholder='Koda sobe'
                                    type='text'
                                    name='roomUrl'
@@ -62,6 +75,9 @@ const JoinRoom = () => {
                             Geslo
                         </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-lock"/>}
+                            />
                             <Input placeholder='Geslo'
                                    type='password'
                                    name='password'

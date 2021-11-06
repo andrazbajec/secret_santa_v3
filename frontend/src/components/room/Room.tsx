@@ -1,11 +1,11 @@
-import { Box, Button, Container, Grid, Heading, Link, Stack, Tooltip, useToast } from '@chakra-ui/react';
-import { useEffect, useState }                                                   from 'react';
-import axios                                                                     from 'axios';
-import { RoomDataResponse, RoomDB }                                              from '../../interfaces/RoomInterface';
-import BaseHelper                                                                from '../../helpers/BaseHelper';
-import { useLocation }                                                           from 'react-router-dom';
-import { CopyIcon }                                                              from '@chakra-ui/icons';
-import Cookies                                                                   from 'js-cookie';
+import { Box, Button, Container, Flex, Grid, Heading, Link, Stack, Tooltip, useToast } from '@chakra-ui/react';
+import { useEffect, useState }                                                         from 'react';
+import axios                                                                           from 'axios';
+import { RoomDataResponse, RoomDB }                                                    from '../../interfaces/RoomInterface';
+import BaseHelper                                                                      from '../../helpers/BaseHelper';
+import { useLocation }                                                                 from 'react-router-dom';
+import { CopyIcon }                                                                    from '@chakra-ui/icons';
+import Cookies                                                                         from 'js-cookie';
 
 const Room = () => {
     const toast = useToast();
@@ -15,7 +15,6 @@ const Room = () => {
         roomID: null,
         roomUrl: null,
         users: [],
-        isNamePicked: false,
         rules: '',
         dateOfExchange: null,
         maxAmount: null,
@@ -48,7 +47,7 @@ const Room = () => {
             .then((res: any) => {
                 const roomData: RoomDataResponse = res.data;
 
-                if (roomData.RoomUsers.length === getState.users.length) {
+                if (roomData.RoomUsers.length === getState.users.length && getState.title) {
                     return;
                 }
 
@@ -127,79 +126,78 @@ const Room = () => {
 
     return (
         <div>
-            <Container>
-                <Stack spacing={4}>
-                    <Heading>{getState.title}</Heading>
-                    <Grid templateColumns="repeat(2, 1fr)">
-                        <Box>
-                            <Tooltip label="Kopiraj">
-                                <Link color="teal"
-                                      onClick={copyCode}
-                                      _hover={{color: "teal.400"}}
-                                >
-                                    {getState.roomUrl} <CopyIcon/>
-                                </Link>
-                            </Tooltip>
-                        </Box>
-                        {
-                            isAdmin && !getState.pickedUser && <Box>
-                                <Button colorScheme="teal"
-                                        variant="outline"
-                                        onClick={generate}
-                                >
-                                    Generiraj
-                                </Button>
+            <Flex align='center' h='100vh'>
+                <Container>
+                    <Stack spacing={4}>
+                        <Heading>{getState.title}</Heading>
+                        <Grid templateColumns="repeat(2, 1fr)">
+                            <Box>
+                                <Tooltip label="Kopiraj">
+                                    <Link color="teal"
+                                          onClick={copyCode}
+                                          _hover={{color: "teal.400"}}
+                                    >
+                                        {getState.roomUrl} <CopyIcon/>
+                                    </Link>
+                                </Tooltip>
                             </Box>
-                        }
-
-                    </Grid>
-                    {
-                        getState.dateOfExchange
-                            ? <h2> Datum Obdarovanja: {getState.dateOfExchange}</h2>
-                            : null
-                    }
-                    {
-                        getState.maxAmount
-                            ? <h2> Max Denarja: {getState.maxAmount}</h2>
-                            : null
-                    }
-                    {
-                        getState.rules
-                            ? <h2> Pravila: {getState.rules}</h2>
-                            : null
-                    }
-                    {
-                        getState.pickedUser && <h2>
-                            Dobili ste: <b>{getState.pickedUser.Name}</b>
-                        </h2>
-                    }
-                    <h2>
-                        Seznam uporabnikov
-                    </h2>
-                    <div>
-                        <ol>
                             {
-                                getState.users.map((user: any) => {
-                                    return (
-                                        <li key={user.Name}>
-                                            {
-                                                user.Name
-                                            }
-                                        </li>
-                                    )
-                                })
+                                isAdmin && !getState.pickedUser && getState.users.length >= 3 &&
+                                <Box>
+                                    <Button colorScheme="teal"
+                                            variant="outline"
+                                            onClick={generate}
+                                    >
+                                        Generiraj
+                                    </Button>
+                                </Box>
                             }
-                        </ol>
-                    </div>
-                    {
-                        getState.isNamePicked
-                            ? <h1>
-                                Dobili ste: Andraž
-                            </h1>
-                            : null
-                    }
-                </Stack>
-            </Container>
+                        </Grid>
+                        {
+                            getState.dateOfExchange &&
+                            <h2>
+                                Datum Obdarovanja: {getState.dateOfExchange}
+                            </h2>
+                        }
+                        {
+                            getState.maxAmount &&
+                            <h2>
+                                Max Denarja: {getState.maxAmount}
+                            </h2>
+                        }
+                        {
+                            getState.rules &&
+                            <h2>
+                                Pravila: {getState.rules}
+                            </h2>
+                        }
+                        {
+                            getState.pickedUser &&
+                            <h2>
+                                Dobili ste: <b>{getState.pickedUser.Name}</b>
+                            </h2>
+                        }
+                        <h2>
+                            Seznam uporabnikov
+                        </h2>
+                        <div>
+                            <ol>
+                                {
+                                    getState.users.map((user: any) => {
+                                        return (
+                                            <li key={user.Name}>
+                                                {
+                                                    user.Name
+                                                }
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ol>
+                        </div>
+                    </Stack>
+                </Container>
+            </Flex>
         </div>
     );
 }
