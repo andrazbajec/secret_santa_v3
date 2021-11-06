@@ -10,16 +10,11 @@ class RoomUserModel extends AbstractModel
     /**
      * @param int $roomID
      * @return array
-     * @throws UnauthorizedException
      */
     public function getData(int $roomID): array
     {
         $roomUsers = $this->databaseController
             ->select('RoomUser', ['*'], ['RoomID' => $roomID]);
-
-        if (!count($roomUsers)) {
-            throw new UnauthorizedException('User does not exist');
-        }
 
         $users = [];
 

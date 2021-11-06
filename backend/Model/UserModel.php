@@ -116,7 +116,8 @@ class UserModel extends AbstractModel
             'Name' => $this->name,
             'Email' => $this->email,
             'Username' => $this->username,
-            'Password' => $this->password
+            'Password' => $this->password,
+            'RoleID' => 2
         ];
 
         $this->databaseController
