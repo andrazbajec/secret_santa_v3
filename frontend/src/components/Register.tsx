@@ -1,9 +1,9 @@
-import { Button, Container, Flex, Heading, Input, InputGroup, Stack, useToast } from "@chakra-ui/react";
-import { Link }                                                                 from "react-router-dom";
-import BaseHelper                                                               from "../helpers/BaseHelper";
-import axios                                                                    from "axios";
-import { useState }                                                             from "react";
-import { RegisterState }                                                        from "../interfaces/RegisterInterface";
+import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
+import { Link }                                                                                              from "react-router-dom";
+import BaseHelper                                                                                            from "../helpers/BaseHelper";
+import axios                                                                                                 from "axios";
+import { useState }                                                                                          from "react";
+import { RegisterState }                                                                                     from "../interfaces/RegisterInterface";
 
 const Register = () => {
     const toast = useToast();
@@ -17,6 +17,46 @@ const Register = () => {
     const register = () => {
         const url = BaseHelper.generateUrl('register');
         const formData = BaseHelper.buildFormData(getState);
+
+        if (!getState.name) {
+            toast({
+                title: 'Niste registrirani',
+                description: 'Vpišite ime.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
+
+        if (!getState.email) {
+            toast({
+                title: 'Niste registrirani',
+                description: 'Vpišite e-mail.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
+
+        if (!getState.username) {
+            toast({
+                title: 'Problem pri registraciji',
+                description: 'Vpišite uporabniško ime.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
+
+        if (!getState.password) {
+            toast({
+                title: 'Problem pri registraciji',
+                description: 'Vpišite geslo.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
 
         axios.post(url, formData)
             .then(() => {
@@ -44,7 +84,13 @@ const Register = () => {
                 <Container>
                     <Stack spacing={4}>
                         <Heading>Registriraj se</Heading>
+                        <FormLabel>
+                            Ime *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-text"/>}
+                            />
                             <Input placeholder="Ime"
                                    type="text"
                                    name="name"
@@ -54,7 +100,13 @@ const Register = () => {
                                    onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
+                        <FormLabel>
+                            Email *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-at"/>}
+                            />
                             <Input placeholder="Email"
                                    type="email"
                                    name="name"
@@ -64,7 +116,13 @@ const Register = () => {
                                    onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
+                        <FormLabel>
+                            Uporabniško ime *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-user"/>}
+                            />
                             <Input placeholder="Uporabniško ime"
                                    type="text"
                                    name="username"
@@ -74,7 +132,13 @@ const Register = () => {
                                    onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
+                        <FormLabel>
+                            Geslo *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-lock"/>}
+                            />
                             <Input placeholder="Geslo"
                                    type="password"
                                    name="password"

@@ -18,7 +18,6 @@ export interface RoomDB {
     roomUrl: number | null;
     roomID: number | null;
     users: User[];
-    isNamePicked: boolean;
     rules: string;
     dateOfExchange: string | null;
     maxAmount: number | null;

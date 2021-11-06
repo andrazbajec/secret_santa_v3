@@ -13,8 +13,8 @@ class AbstractException extends Exception
     public $message;
 
     /**
-     * @param string $message
-     * @param int $code
+     * @param string         $message
+     * @param int            $code
      * @param Throwable|null $previous
      * @throws Exception
      */
@@ -29,7 +29,8 @@ class AbstractException extends Exception
         parent::__construct($message, $code, $previous);
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
 }
