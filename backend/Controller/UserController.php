@@ -2,21 +2,35 @@
 
 namespace Controller;
 
+use Carbon\Carbon;
+use Enum\UserEnum;
+use Exception;
 use Exception\InvalidDataException;
+use Model\ResetPasswordTokenModel;
 use Model\UserModel;
 
-class UserController
+class UserController extends AbstractController
 {
+    /** @var UserModel */
+    protected UserModel $userModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->userModel = new UserModel();
+    }
+
     /**
      * @return array
      * @throws InvalidDataException
      */
     public function registerUser(): array
     {
-        $name = $_POST['name'] ?? null;
-        $email = $_POST['email'] ?? null;
-        $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $name = $this->getData('name');
+        $email = $this->getData('email');
+        $username = $this->getData('username');
+        $password = $this->getData('password');
 
         if (!$name) {
             throw new InvalidDataException('Name was not provided!');
@@ -35,10 +49,10 @@ class UserController
             throw new InvalidDataException('Password was not provided!');
         }
 
-        $user = new UserModel();
-        $user->createUser($name, $email, $username, $password, true);
 
-        return $user->toArray();
+        return $this->userModel
+            ->createUser($name, $email, $username, $password, true)
+            ->toArray();
     }
 
     /**
@@ -47,16 +61,16 @@ class UserController
      */
     public function loginUser(): array
     {
-        $username = $_POST['username'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $username = $this->getData('username');
+        $password = $this->getData('password');
 
         if (!$username && !$password) {
             throw new InvalidDataException('Invalid username or password');
         }
-        $user = new UserModel();
-        $user->loginUser($username, $password);
 
-        return $user->toArray();
+        return $this->userModel
+            ->loginUser($username, $password)
+            ->toArray();
     }
 
     /**
@@ -75,6 +89,95 @@ class UserController
             throw new InvalidDataException('UserID or token not provided!');
         }
 
-        return (new UserModel())->validateToken($userID, $token);
+        return $this->userModel
+            ->validateToken($userID, $token);
+    }
+
+    /**
+     * @throws InvalidDataException
+     * @throws Exception
+     */
+    public function sendResetPasswordEmail(): array
+    {
+        $email = $this->getData('email');
+
+        if (!$email) {
+            throw new InvalidDataException('Email was not provided!');
+        }
+
+        if (!preg_match(UserEnum::EMAIL_REGEX, $email)) {
+            throw new InvalidDataException('Email is not valid');
+        }
+
+        $user = $this->userModel
+                ->getUserByWildCard(['Email' => $email])[0] ?? null;
+
+        if (!$user) {
+            throw new InvalidDataException('Email is not tied to any account!');
+        }
+
+        $userID = $user['UserID'];
+
+        $token = (new ResetPasswordTokenModel())->getValidToken($userID);
+
+        if ($token) {
+            throw new InvalidDataException('An email was already sent in the last 10 minutes!');
+        }
+
+        do {
+            $newToken = random_int(1000000000, 9999999999);
+            $tokenIsUsed = (new ResetPasswordTokenModel())->tokenIsUsed($newToken);
+        } while ($tokenIsUsed);
+
+        (new ResetPasswordTokenModel())->addToken($userID, $newToken);
+
+        $frontendUrl = $this->getEnv('FRONTEND_HOST');
+        if (!$frontendUrl) {
+            throw new InvalidDataException('Frontend host is invalid!');
+        }
+
+        $url = sprintf('%s/reset-password/%d', $frontendUrl, $newToken);
+
+        $message = sprintf(
+            "Pozdravljeni, \n svoje geslo lahko ponastavite na naslednji povezavi: %s",
+            $url
+        );
+
+        MailController::sendMail($email, 'Pozabljeno geslo', $message);
+
+        return [];
+    }
+
+    /**
+     * @throws InvalidDataException
+     */
+    public function resetPassword(): array
+    {
+        $token = $this->getData('token');
+        $password = $this->getData('password');
+
+        if (!$token) {
+            throw new InvalidDataException('Token was not provided!');
+        }
+
+        if (!$password) {
+            throw new InvalidDataException('Password was not provided!');
+        }
+
+        $tokenData = (new ResetPasswordTokenModel())->getTokenData($token);
+
+        $userID = $tokenData['UserID'] ?? null;
+
+        if (!$userID) {
+            throw new InvalidDataException('Token is not valid!');
+        }
+
+        $user = $this->userModel
+            ->updatePassword($password, $userID);
+        $user->loginUser($user->Username, $password);
+
+        (new ResetPasswordTokenModel())->invalidateToken($token);
+
+        return [];
     }
 }

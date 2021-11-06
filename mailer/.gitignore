@@ -1,0 +1,5 @@
+.env
+.env.test
+error.log
+base.log
+__pycache__

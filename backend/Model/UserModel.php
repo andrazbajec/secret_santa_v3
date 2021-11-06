@@ -89,13 +89,13 @@ class UserModel extends AbstractModel
         }
 
         $user = $this->databaseController
-                ->select('User', ['*'], ['Username' => $username])[0] ?? null;
+                ->select('User', ['UserID', 'Password'], ['Username' => $username])[0] ?? null;
 
         if (!$user) {
             throw new InvalidDataException('User does not exist!');
         }
 
-        $this->username = $username;
+        $this->UserID = $user['UserID'];
         $hashedPassword = $user['Password'] ?? '';
 
         if (!password_verify($password, $hashedPassword)) {
@@ -123,6 +123,8 @@ class UserModel extends AbstractModel
         $this->databaseController
             ->insert('User', $data);
 
+        $this->UserID = $this->getLastID();
+
         $this->loadData();
 
         return $this;
@@ -134,7 +136,7 @@ class UserModel extends AbstractModel
     private function loadData(): void
     {
         $user = $this->databaseController
-                ->select('User', ['*'], ['Username' => $this->username])[0] ?? [];
+                ->select('User', ['*'], ['UserID' => $this->UserID])[0] ?? [];
 
         if (!count($user)) {
             return;
@@ -173,11 +175,54 @@ class UserModel extends AbstractModel
 
         $dateExpiration = Carbon::parse($dateExpiration);
 
-        if ($tokenData['DateDeleted'] ?? null || !$dateExpiration->isValid() || $dateExpiration < Carbon::now()) {
+        if ($tokenData['DateDeleted'] ?? null || !$dateExpiration->isValid() || $dateExpiration < Carbon::now('CET')) {
             throw new InvalidDataException('Token has expired!');
         }
 
         return (new UserTokenModel())->createToken($userID)
             ->toArray();
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getUserByWildCard(array $data): array
+    {
+        return $this->databaseController
+            ->select('User', ['UserID'], $data) ?? [];
+    }
+
+    /**
+     * @param string   $password
+     * @param int|null $userID
+     * @return $this
+     * @throws InvalidDataException
+     */
+    public function updatePassword(string $password, int $userID = null): UserModel
+    {
+        $userID = $userID ?? $this->UserID ?? null;
+
+        if (!$userID) {
+            throw new InvalidDataException('UserID is not valid!');
+        }
+
+        if (!$password) {
+            throw new InvalidDataException('Password is not valid!');
+        }
+
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);;
+
+        $this->databaseController
+            ->update(
+                'User',
+                ['Password' => $hashedPassword],
+                ['UserID' => $userID]
+            );
+
+        $this->UserID = $userID;
+        $this->loadData();
+
+        return $this;
     }
 }
