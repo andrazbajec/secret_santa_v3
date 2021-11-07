@@ -1,4 +1,4 @@
-import '../src/css/app.scss';
+import '../src/css/app.css';
 import React, { useEffect, useState }                         from 'react';
 import { Route, Switch, useLocation, withRouter, useHistory } from 'react-router-dom';
 import Login                                                  from './components/authentication/Login';
