@@ -45,7 +45,7 @@ class RouteHelper
                     case '/join-room':
                         return $this->roomController->joinRoom();
                     case '/room':
-                        return $this->roomController->getData();
+                        return $this->roomController->getRoomData();
                     case '/generate-room':
                         return $this->roomController->generateRoom();
                     case '/send-reset-password-email':

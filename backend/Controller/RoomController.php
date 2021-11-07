@@ -8,7 +8,7 @@ use Exception\UnauthorizedException;
 use Model\RoomModel;
 use Model\RoomUserModel;
 
-class RoomController
+class RoomController extends AbstractController
 {
     /**
      * @return array
@@ -16,12 +16,12 @@ class RoomController
      */
     public function createRoom(): array
     {
-        $title = $_POST['title'] ?? null;
-        $password = $_POST['password'] ?? null;
-        $shouldJoin = $_POST['shouldJoin'] ?? null;
-        $isPrivate = $_POST['isPrivate'] ?? null;
-        $maxAmount = ($_POST['maxAmount'] ?? null) ?: null;
-        $dateOfExchange = ($_POST['dateOfExchange'] ?? null) ?: null;
+        $title = $this->getData('title');
+        $password = $this->getData('password');
+        $shouldJoin = $this->getData('shouldJoin');
+        $isPrivate = (int)$this->getData('isPrivate');
+        $maxAmount = $this->getData('maxAmount') ?: null;
+        $dateOfExchange = $this->getData('dateOfExchange') ?: null;
         $rules = $_POST['rules'] ?? null;
         $userID = $_COOKIE['user-id'] ?? null;
 
@@ -58,9 +58,8 @@ class RoomController
     /**
      * @return array
      * @throws InvalidDataException
-     * @throws UnauthorizedException
      */
-    public function getData(): array
+    public function getRoomData(): array
     {
         $roomUrl = $_POST['roomUrl'] ?? null;
         $userID = $_COOKIE['user-id'] ?? null;

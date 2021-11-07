@@ -31,8 +31,8 @@ class RoomModel extends AbstractModel
     private string $name;
     /** @var int $roomJoin */
     private int $roomJoin;
-    /** @var bool|null $isPrivate */
-    private ?bool $isPrivate;
+    /** @var int|null */
+    private ?int $isPrivate;
     /** @var int|null $maxAmount */
     private ?int $maxAmount;
     /** @var string|null $dateOfExchange */
@@ -56,7 +56,7 @@ class RoomModel extends AbstractModel
      * @param string      $title
      * @param int         $userID
      * @param string|null $password
-     * @param bool|null   $isPrivate
+     * @param int|null    $isPrivate
      * @param int|null    $maxAmount
      * @param string|null $dateOfExchange
      * @param string|null $rules
@@ -68,7 +68,7 @@ class RoomModel extends AbstractModel
         string  $title,
         int     $userID,
         ?string $password,
-        ?bool   $isPrivate,
+        ?int    $isPrivate,
         ?int    $maxAmount,
         ?string $dateOfExchange,
         ?string $rules,
