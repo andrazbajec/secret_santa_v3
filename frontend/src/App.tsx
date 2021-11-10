@@ -126,7 +126,7 @@ const App = () => {
                            component={JoinRoom}
                            exact
                     />
-                    <Route path="/pokazi-sobe"
+                    <Route path="/seznam-sob"
                            component={RoomList}
                            exact
                     />

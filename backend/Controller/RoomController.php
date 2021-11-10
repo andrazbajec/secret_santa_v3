@@ -10,6 +10,19 @@ use Model\RoomUserModel;
 
 class RoomController extends AbstractController
 {
+
+    /**
+     * @var RoomModel
+     */
+    protected RoomModel $roomModel;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->roomModel = new RoomModel();
+    }
+
     /**
      * @return array
      * @throws InvalidDataException
@@ -21,18 +34,31 @@ class RoomController extends AbstractController
         $shouldJoin = $this->getData('shouldJoin');
         $isPrivate = (int)$this->getData('isPrivate');
         $maxAmount = $this->getData('maxAmount') ?: null;
-        $dateOfExchange = $this->getData('dateOfExchange') ?: null;
-        $rules = $_POST['rules'] ?? null;
+        $dateOfExchange = $this->getData('dateOfExchange');
+        $rules = $this->getData('rules');
         $userID = $_COOKIE['user-id'] ?? null;
 
         if (!$title) {
             throw new InvalidDataException('Title was not provided!');
         }
 
-        $room = new RoomModel();
-        $room->createRoom($title, $userID, $password, $isPrivate, $maxAmount, $dateOfExchange, $rules, $shouldJoin);
+        if (strlen($title) > 20) {
+            throw new InvalidDataException('Title is too long. Maximum title length is 20 characters.');
+        }
 
-        return $room->toArray();
+        if ($dateOfExchange) {
+            try {
+                Carbon::createFromFormat('Y-m-d', $dateOfExchange);
+            } catch (\Exception $e) {
+                throw new InvalidDataException('Date is not valid!');
+            }
+        } else {
+            $dateOfExchange = null;
+        }
+
+        return $this->roomModel
+            ->createRoom($title, $userID, $password, $isPrivate, $maxAmount, $dateOfExchange, $rules, $shouldJoin)
+            ->toArray();
     }
 
     /**
@@ -41,18 +67,17 @@ class RoomController extends AbstractController
      */
     public function joinRoom(): array
     {
-        $roomUrl = $_POST['roomUrl'] ?? null;
-        $password = $_POST['password'] ?? null;
+        $roomUrl = $this->getData('roomUrl');
+        $password = $this->getData('password');
         $userID = $_COOKIE['user-id'] ?? null;
 
         if (!$roomUrl && !$password) {
             throw new InvalidDataException('Invalid room url or password');
         }
 
-        $room = new RoomModel();
-        $room->joinRoom($roomUrl, $userID, $password);
-
-        return $room->toArray();
+        return $this->roomModel
+            ->joinRoom($roomUrl, $userID, $password)
+            ->toArray();
     }
 
     /**
@@ -61,7 +86,7 @@ class RoomController extends AbstractController
      */
     public function getRoomData(): array
     {
-        $roomUrl = $_POST['roomUrl'] ?? null;
+        $roomUrl = $this->getData('roomUrl');
         $userID = $_COOKIE['user-id'] ?? null;
 
         $room = new RoomModel();
@@ -93,13 +118,27 @@ class RoomController extends AbstractController
     /**
      * @return array
      * @throws InvalidDataException
+     */
+    public function getUserRooms(): array
+    {
+        $userID = $_COOKIE['user-id'] ?? null;
+
+        if (!$userID) {
+            throw new InvalidDataException('User ID was not provided!');
+        }
+
+        return (new RoomModel())->getUserRooms($userID);
+    }
+
+    /**
+     * @return array
+     * @throws InvalidDataException
      * @throws UnauthorizedException
-     * @throws \Exception
      */
     public function generateRoom(): array
     {
         $userID = $_COOKIE['user-id'] ?? null;
-        $roomID = $_POST['room-id'] ?? null;
+        $roomID = $this->getData('room-id');
 
         if (!$roomID) {
             throw new InvalidDataException('Room ID was not provided!');

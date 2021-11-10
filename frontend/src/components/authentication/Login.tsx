@@ -1,9 +1,9 @@
-import { Button, Container, Flex, Heading, Input, InputGroup, Stack, useToast } from "@chakra-ui/react";
-import { Link }                                                                 from "react-router-dom";
-import axios                                                                    from "axios";
-import { useState }                                                             from "react";
-import BaseHelper                                                               from "../../helpers/BaseHelper";
-import { LoginState }                                                           from "../../interfaces/LoginInterface";
+import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
+import { Link }                                                                                              from "react-router-dom";
+import axios                                                                                                 from "axios";
+import { useState }                                                                                          from "react";
+import BaseHelper                                                                                            from "../../helpers/BaseHelper";
+import { LoginState }                                                                                        from "../../interfaces/LoginInterface";
 
 const Login = () => {
     const toast = useToast();
@@ -16,6 +16,26 @@ const Login = () => {
     const login = () => {
         const url = BaseHelper.generateUrl('login');
         const formData = BaseHelper.buildFormData(getState);
+
+        if (!getState.username) {
+            toast({
+                title: 'Problem pri vpisovanju',
+                description: 'Vpišite uporabniško ime.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
+
+        if (!getState.password) {
+            toast({
+                title: 'Problem pri vpisovanju',
+                description: 'Vpišite geslo.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
 
         axios.post(url, formData)
             .then(() => {
@@ -43,7 +63,13 @@ const Login = () => {
                 <Container>
                     <Stack spacing={4}>
                         <Heading>Vpiši se</Heading>
+                        <FormLabel>
+                            Uporabniško ime *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-user"/>}
+                            />
                             <Input placeholder="Uporabniško ime"
                                    type="text"
                                    name="username"
@@ -53,7 +79,13 @@ const Login = () => {
                                    onKeyUp={checkKeyPress}
                             />
                         </InputGroup>
+                        <FormLabel>
+                            Geslo *
+                        </FormLabel>
                         <InputGroup>
+                            <InputLeftElement pointerEvents="none"
+                                              children={<i className="far fa-lock"/>}
+                            />
                             <Input placeholder="Geslo"
                                    type="password"
                                    name="password"

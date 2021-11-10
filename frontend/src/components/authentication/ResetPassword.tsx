@@ -17,8 +17,8 @@ const ResetPassword = (props: ResetPasswordProps) => {
     const resetPassword = () => {
         if (!getState.password) {
             toast({
-                title: 'Could not reset password',
-                description: 'Invalid password',
+                title: 'Gesla ni bilo mogoče spremeniti',
+                description: 'Napačno geslo',
                 status: 'warning',
                 duration: 3000
             });
@@ -27,8 +27,8 @@ const ResetPassword = (props: ResetPasswordProps) => {
 
         if (getState.password !== getState.validatePassword) {
             toast({
-                title: 'Could not reset password',
-                description: 'Passwords do not match',
+                title: 'Gesla ni bilo mogoče spremeniti',
+                description: 'Gesli se ne ujemata',
                 status: 'warning',
                 duration: 3000
             });

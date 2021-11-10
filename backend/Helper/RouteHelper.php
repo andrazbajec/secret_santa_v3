@@ -58,6 +58,8 @@ class RouteHelper
                 switch ($uri) {
                     case '/room-list':
                         return $this->roomController->getRoomList();
+                    case '/user-rooms':
+                        return $this->roomController->getUserRooms();
                 }
         }
 

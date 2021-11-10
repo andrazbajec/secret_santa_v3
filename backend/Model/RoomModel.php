@@ -220,15 +220,38 @@ class RoomModel extends AbstractModel
     public function getRoomList(): array
     {
         $sql = '
-            SELECT R.RoomID, R.Title, R.RoomUrl, COUNT(RU.UserID) Users, U.Username Author
-            FROM RoomUser RU
-                     INNER JOIN Room R ON RU.RoomID = R.RoomID
-                     INNER JOIN User U on R.UserID = U.UserID
-            GROUP BY RU.RoomID;
+            SELECT R.RoomID, R.Title, R.RoomUrl, COUNT(RU.UserID) Users, U.Username Author, R.Status
+            FROM Room R
+                    LEFT JOIN RoomUser RU ON RU.RoomID = R.RoomID
+                    INNER JOIN User U on R.UserID = U.UserID
+            WHERE R.IsPrivate = 0
+            GROUP BY R.RoomID;
         ';
 
         return $this->databaseController
             ->raw($sql);
+    }
+
+    /**
+     * @param int $userID
+     * @return array
+     */
+    public function getUserRooms(int $userID): array
+    {
+        $sql = '
+            SELECT R.RoomID, R.Title, R.RoomUrl, COUNT(RU.UserID) Users, R.Status
+            FROM Room R
+                    LEFT JOIN RoomUser RU on R.RoomID = RU.RoomID
+            WHERE R.UserID = :userID or RU.UserID = :userID 
+            GROUP BY R.RoomID;
+        ';
+
+        $params = [
+            'userID' => $userID
+        ];
+
+        return $this->databaseController
+            ->raw($sql, $params);
     }
 
     /**

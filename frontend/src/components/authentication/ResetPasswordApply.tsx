@@ -15,8 +15,8 @@ const ResetPasswordApply = () => {
     const sendResetPasswordEmail = () => {
         if (!getState.email) {
             toast({
-                title: 'Could not submit',
-                description: 'Email can not be blank!',
+                title: 'Ni bilo mogoče poslati',
+                description: 'Email ne more biti prazen!',
                 status: 'warning',
                 duration: 3000
             });

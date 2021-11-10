@@ -33,8 +33,18 @@ const CreateRoom = () => {
 
         if (!getState.title) {
             toast({
-                title: 'Soba ni bila narejena',
+                title: 'Sobe ni bilo mogoče narediti',
                 description: 'Vpišite ime sobe.',
+                status: 'warning',
+                duration: 3000
+            });
+            return;
+        }
+
+        if (getState.title.length > 20) {
+            toast({
+                title: 'Sobe ni bilo mogoče narediti',
+                description: 'Ime sobe je predolgo. Ime ima lahko največ 20 znakov.',
                 status: 'warning',
                 duration: 3000
             });

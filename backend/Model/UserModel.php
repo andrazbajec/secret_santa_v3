@@ -55,7 +55,7 @@ class UserModel extends AbstractModel
     public function createUser(string $name, string $email, string $username, string $password, bool $login = false): UserModel
     {
         $user = $this->databaseController
-            ->select('User', ['*'], ['username' => $username]);
+            ->select('User', ['*'], ['Username' => $username]);
 
         if (count($user)) {
             throw new InvalidDataException('Username is already taken!');
@@ -190,7 +190,7 @@ class UserModel extends AbstractModel
     public function getUserByWildCard(array $data): array
     {
         return $this->databaseController
-            ->select('User', ['UserID'], $data) ?? [];
+                ->select('User', ['UserID'], $data) ?? [];
     }
 
     /**
