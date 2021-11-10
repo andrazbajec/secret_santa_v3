@@ -117,7 +117,7 @@ const Settings = () => {
 
         setState({...newState});
     }
-    😡
+    
     return (
         <div>
             <Flex align="center" h="100vh">
