@@ -7,7 +7,7 @@ import {
     InputGroup,
     Stack,
     FormLabel,
-    useToast, InputLeftElement
+    useToast, InputLeftElement, FormControl
 }                          from "@chakra-ui/react";
 import BaseHelper          from "../../helpers/BaseHelper";
 import { useState }        from "react";
@@ -80,115 +80,117 @@ const CreateRoom = () => {
                         <Heading>
                             Naredi Sobo
                         </Heading>
-                        <FormLabel>
-                            Ime Sobe *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-text"/>}
-                            />
-                            <Input placeholder='Ime sobe'
-                                   type='text'
-                                   name='title'
-                                   required
-                                   value={getState.title}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'title')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Geslo
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-lock"/>}
-                            />
-                            <Input placeholder='Geslo'
-                                   type='password'
-                                   name='password'
-                                   value={getState.password}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Pravila
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-ellipsis-h"/>}
-                            />
-                            <Input placeholder='Pravila'
-                                   type='text'
-                                   name='rules'
-                                   value={getState.rules}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'rules')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Datum Obdarovanja
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="fad fa-calendar"/>}
-                            />
-                            <Input placeholder='Datum Obdarovanja'
-                                   type='date'
-                                   name='dateOfExchange'
-                                   value={getState.dateOfExchange}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'dateOfExchange')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Max Denarja
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-euro-sign"/>}
-                            />
-                            <Input placeholder='Max Denarja'
-                                   type='number'
-                                   name='maxAmount'
-                                   value={getState.maxAmount as number}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'maxAmount')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <InputGroup className='checkboxes'>
-                            <div className='d-flex float-left'>
-                                <FormLabel htmlFor='shouldJoin'
-                                           className='checkbox-label'
-                                >
-                                    Sodeluj
-                                </FormLabel>
-                                <label>
-                                    <Input type='checkbox'
-                                           id='shouldJoin'
-                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
-                                    />
-                                    <span/>
-                                    <i className='indicator'/>
-                                </label>
-                            </div>
-                            <div className='d-flex float-right'>
-                                <FormLabel htmlFor='isPrivate'
-                                           className='checkbox-label'
-                                >
-                                    Privat soba
-                                </FormLabel>
-                                <label>
-                                    <Input type='checkbox'
-                                           id='isPrivate'
-                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
-                                    />
-                                    <span/>
-                                    <i className='indicator'/>
-                                </label>
-                            </div>
-                            <div className='clear-both'/>
-                        </InputGroup>
+                        <FormControl>
+                            <FormLabel>
+                                Ime Sobe *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-text"/>}
+                                />
+                                <Input placeholder='Ime sobe'
+                                       type='text'
+                                       name='title'
+                                       required
+                                       value={getState.title}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'title')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Geslo
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-lock"/>}
+                                />
+                                <Input placeholder='Geslo'
+                                       type='password'
+                                       name='password'
+                                       value={getState.password}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Pravila
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-ellipsis-h"/>}
+                                />
+                                <Input placeholder='Pravila'
+                                       type='text'
+                                       name='rules'
+                                       value={getState.rules}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'rules')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Datum Obdarovanja
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="fad fa-calendar"/>}
+                                />
+                                <Input placeholder='Datum Obdarovanja'
+                                       type='date'
+                                       name='dateOfExchange'
+                                       value={getState.dateOfExchange}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'dateOfExchange')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Max Denarja
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-euro-sign"/>}
+                                />
+                                <Input placeholder='Max Denarja'
+                                       type='number'
+                                       name='maxAmount'
+                                       value={getState.maxAmount as number}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'maxAmount')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <InputGroup className='checkboxes'>
+                                <div className='d-flex float-left'>
+                                    <FormLabel htmlFor='shouldJoin'
+                                               className='checkbox-label'
+                                    >
+                                        Sodeluj
+                                    </FormLabel>
+                                    <label>
+                                        <Input type='checkbox'
+                                               id='shouldJoin'
+                                               onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
+                                        />
+                                        <span/>
+                                        <i className='indicator'/>
+                                    </label>
+                                </div>
+                                <div className='d-flex float-right'>
+                                    <FormLabel htmlFor='isPrivate'
+                                               className='checkbox-label'
+                                    >
+                                        Privat soba
+                                    </FormLabel>
+                                    <label>
+                                        <Input type='checkbox'
+                                               id='isPrivate'
+                                               onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
+                                        />
+                                        <span/>
+                                        <i className='indicator'/>
+                                    </label>
+                                </div>
+                                <div className='clear-both'/>
+                            </InputGroup>
+                        </FormControl>
                         <Button colorScheme='green'
                                 variant='outline'
                                 type='submit'

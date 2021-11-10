@@ -52,6 +52,8 @@ class RouteHelper
                         return $this->userController->sendResetPasswordEmail();
                     case '/reset-password':
                         return $this->userController->resetPassword();
+                    case '/save-user-data':
+                        return $this->userController->saveUserData();
                 }
                 break;
             case 'GET':
@@ -60,6 +62,8 @@ class RouteHelper
                         return $this->roomController->getRoomList();
                     case '/user-rooms':
                         return $this->roomController->getUserRooms();
+                    case '/get-user-data':
+                        return $this->userController->getUserData();
                 }
         }
 

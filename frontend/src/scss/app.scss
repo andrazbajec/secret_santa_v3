@@ -366,3 +366,37 @@ div.checkboxes {
 .room-text {
   font-size: 1.5rem;
 }
+
+div.input-icon-right {
+  background-color: transparent;
+  border-color: black;
+
+  &:hover:not(.loading) {
+    background-color: var(--chakra-colors-green-100);
+    cursor: pointer;
+    color: var(--chakra-colors-green-600);
+  }
+}
+
+.navbar p:hover {
+  text-decoration: underline;
+}
+
+.loading {
+  input, div {
+    pointer-events: none !important;
+    animation: glowing 3s infinite;
+  }
+}
+
+@keyframes glowing {
+  0% {
+    background-color: var(--chakra-colors-yellow-400);
+  }
+  50% {
+    background-color: var(--chakra-colors-yellow-500);
+  }
+  100% {
+    background-color: var(--chakra-colors-yellow-400);
+  }
+}

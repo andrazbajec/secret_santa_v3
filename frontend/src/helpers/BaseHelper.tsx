@@ -1,8 +1,10 @@
 import { ChangeEvent } from "react";
 
 class BaseHelper {
-    public static generateUrl(path: string): string {
-        return `${process.env.REACT_APP_API_URL}/${path}`;
+    public static generateUrl(path: string, params: any = null): string {
+        params = params ? `?${new URLSearchParams(params).toString()}` : '';
+
+        return `${process.env.REACT_APP_API_URL}/${path}${params}`;
     }
 
     public static buildFormData(data: any): FormData {
@@ -32,7 +34,7 @@ class BaseHelper {
         return formData;
     }
 
-    public static inputChange(event: ChangeEvent, setState: any, getState: any, key: string): void {
+    public static inputChange(event: ChangeEvent<HTMLInputElement>, setState: any, getState: any, key: string): void {
         const newState = {...getState};
         // @ts-ignore
         newState[key] = event.currentTarget.value;

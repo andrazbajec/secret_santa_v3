@@ -7,6 +7,8 @@ import { useHistory, useLocation }                                              
 import { CopyIcon }                                                                    from '@chakra-ui/icons';
 import Cookies                                                                         from 'js-cookie';
 
+let interval: any = null;
+
 const Room = () => {
     const toast = useToast();
     const history = useHistory();
@@ -67,14 +69,16 @@ const Room = () => {
                 setIsAdmin(Cookies.get('user-id') === `${roomData.UserID}`);
             })
             .catch((error: any) => {
-                console.log(error);
-
                 toast({
                     title: 'Could not get room data',
                     description: error.response.data,
                     status: 'error',
                     duration: 3000
                 });
+                if (interval) {
+                    clearInterval(interval);
+                }
+                history.push('/');
             });
     }
 
@@ -121,8 +125,12 @@ const Room = () => {
     }
 
     useEffect(() => {
+        clearInterval(interval);
+    });
+
+    useEffect(() => {
         loadUsers();
-        setInterval(loadUsers, 10000);
+        interval = setInterval(loadUsers, 10000);
     }, []);
 
     return (

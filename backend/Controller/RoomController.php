@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Carbon\Carbon;
+use Exception;
 use Exception\InvalidDataException;
 use Exception\UnauthorizedException;
 use Model\RoomModel;
@@ -134,6 +135,7 @@ class RoomController extends AbstractController
      * @return array
      * @throws InvalidDataException
      * @throws UnauthorizedException
+     * @throws Exception
      */
     public function generateRoom(): array
     {
