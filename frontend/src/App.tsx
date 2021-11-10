@@ -5,17 +5,18 @@ import Login                                                  from './components
 import Register                                               from './components/authentication/Register';
 import NotFound                                               from './views/NotFound';
 import Cookies                                                from 'js-cookie';
-import BaseHelper                                             from './helpers/BaseHelper';
-import axios                                                  from 'axios';
-import Navbar                                                 from './components/Navbar';
-import CreateRoom                                             from './components/room/CreateRoom';
-import JoinRoom                                               from './components/room/JoinRoom';
-import RoomList                                               from './components/room/RoomList';
-import Room                                                   from './components/room/Room';
-import Home                                                   from './components/Home';
-import Instructions                                           from './components/Instructions';
-import ResetPassword                                          from './components/authentication/ResetPassword';
-import ResetPasswordApply                                     from './components/authentication/ResetPasswordApply';
+import BaseHelper         from './helpers/BaseHelper';
+import axios              from 'axios';
+import Navbar             from './components/Navbar';
+import CreateRoom         from './components/room/CreateRoom';
+import JoinRoom           from './components/room/JoinRoom';
+import RoomList           from './components/room/RoomList';
+import Room               from './components/room/Room';
+import Home               from './components/Home';
+import Instructions       from './components/Instructions';
+import ResetPassword      from './components/authentication/ResetPassword';
+import ResetPasswordApply from './components/authentication/ResetPasswordApply';
+import Settings           from './components/user/Settings';
 
 axios.defaults.withCredentials = true;
 let appLoaded = false;
@@ -144,6 +145,10 @@ const App = () => {
                 />
                 <Route path="/reset-password/:token"
                        component={ResetPassword}
+                       exact
+                />
+                <Route path="/nastavitve"
+                       component={Settings}
                        exact
                 />
                 <Route path="/logout"

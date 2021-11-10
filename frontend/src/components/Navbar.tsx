@@ -1,6 +1,7 @@
-import { Button, DrawerBody, DrawerContent, DrawerHeader, Link, Drawer, useDisclosure } from "@chakra-ui/react";
+import { Button, DrawerBody, DrawerContent, DrawerHeader, Drawer, useDisclosure } from "@chakra-ui/react";
+import { Link }                                                                   from 'react-router-dom';
 
-function Navbar(props: any) {
+const Navbar = (props: any) => {
     const {isOpen, onOpen, onClose} = useDisclosure()
 
     return (
@@ -10,16 +11,14 @@ function Navbar(props: any) {
                     id="open-navbar"
             >
                 {
-                    !isOpen
-                        ? <i className="fal fa-bars"/>
-                        : null
+                    !isOpen && <i className="fal fa-bars"/>
                 }
             </Button>
             <Drawer placement='left'
                     onClose={onClose}
                     isOpen={isOpen}
             >
-                <DrawerContent>
+                <DrawerContent className="navbar">
                     <DrawerHeader borderBottomWidth="1px">
                         Secret Santa
                     </DrawerHeader>
@@ -28,45 +27,50 @@ function Navbar(props: any) {
                             !props.authenticated
                                 ? <div>
                                     <p>
-                                        <Link href='/register'>
+                                        <Link to='/register'>
                                             <i className="fal fa-user-plus"/> Registriraj se
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/login'>
+                                        <Link to='/login'>
                                             <i className="fal fa-sign-in"/> Vpiši se
                                         </Link>
                                     </p>
                                 </div>
                                 : <div>
                                     <p>
-                                        <Link href='/'>
+                                        <Link to='/'>
                                             <i className="fal fa-home-lg-alt"/> Domov
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/naredi-sobo'>
-                                            <i className="fal fa-plus-square"/> Naredi Sobo
+                                        <Link to='/naredi-sobo'>
+                                            <i className="fal fa-plus-square"/> Naredi sobo
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/pridruzi-se-sobi'>
-                                            <i className="fal fa-arrow-square-right"/> Pridruzi Se Sobi
+                                        <Link to='/pridruzi-se-sobi'>
+                                            <i className="fal fa-arrow-square-right"/> Pridruži se sobi
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/seznam-sob'>
-                                            <i className="fal fa-list-ul"/> Seznam Sob
+                                        <Link to='/seznam-sob'>
+                                            <i className="fal fa-list-ul"/> Seznam sob
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/navodila'>
+                                        <Link to='/navodila'>
                                             <i className="fal fa-info-square"/> Navodila
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/logout'>
-                                            <i className="fal fa-sign-out"/> Izpisi se
+                                        <Link to='/nastavitve'>
+                                            <i className="fal fa-cog"/> Nastavitve
+                                        </Link>
+                                    </p>
+                                    <p>
+                                        <Link to='/logout'>
+                                            <i className="fal fa-sign-out"/> Izpiši se
                                         </Link>
                                     </p>
                                 </div>

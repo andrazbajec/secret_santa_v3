@@ -49,4 +49,13 @@ class AbstractController
     {
         return $_ENV[$key] ?? null;
     }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getCookie(string $key): mixed
+    {
+        return $_COOKIE[$key] ?? null;
+    }
 }

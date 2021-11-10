@@ -1,9 +1,9 @@
-import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
-import { Link }                                                                                              from "react-router-dom";
-import BaseHelper                                                                                            from "../../helpers/BaseHelper";
-import axios                                                                                                 from "axios";
-import { useState }                                                                                          from "react";
-import { RegisterState }                                                                                     from "../../interfaces/RegisterInterface";
+import { Button, Container, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
+import { Link }                                                                                                           from "react-router-dom";
+import BaseHelper                                                                                                         from "../../helpers/BaseHelper";
+import axios                                                                                                              from "axios";
+import { useState }                                                                                                       from "react";
+import { RegisterState }                                                                                                  from "../../interfaces/RegisterInterface";
 
 const Register = () => {
     const toast = useToast();
@@ -86,70 +86,72 @@ const Register = () => {
                         <Heading>
                             Registriraj se
                         </Heading>
-                        <FormLabel>
-                            Ime *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-text"/>}
-                            />
-                            <Input placeholder="Ime"
-                                   type="text"
-                                   name="name"
-                                   required
-                                   value={getState.name}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'name')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Email *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-at"/>}
-                            />
-                            <Input placeholder="Email"
-                                   type="email"
-                                   name="name"
-                                   required
-                                   value={getState.email}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'email')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Uporabniško ime *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-user"/>}
-                            />
-                            <Input placeholder="Uporabniško ime"
-                                   type="text"
-                                   name="username"
-                                   required
-                                   value={getState.username}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'username')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Geslo *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-lock"/>}
-                            />
-                            <Input placeholder="Geslo"
-                                   type="password"
-                                   name="password"
-                                   required
-                                   value={getState.password}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
+                        <FormControl>
+                            <FormLabel>
+                                Ime *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-text"/>}
+                                />
+                                <Input placeholder="Ime"
+                                       type="text"
+                                       name="name"
+                                       required
+                                       value={getState.name}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'name')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Email *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-at"/>}
+                                />
+                                <Input placeholder="Email"
+                                       type="email"
+                                       name="name"
+                                       required
+                                       value={getState.email}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'email')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Uporabniško ime *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-user"/>}
+                                />
+                                <Input placeholder="Uporabniško ime"
+                                       type="text"
+                                       name="username"
+                                       required
+                                       value={getState.username}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'username')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Geslo *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-lock"/>}
+                                />
+                                <Input placeholder="Geslo"
+                                       type="password"
+                                       name="password"
+                                       required
+                                       value={getState.password}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                        </FormControl>
                         <Button colorScheme="green"
                                 variant="outline"
                                 onClick={register}

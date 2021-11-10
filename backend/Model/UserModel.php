@@ -35,12 +35,7 @@ class UserModel extends AbstractModel
         'Username',
         'Name',
         'Email',
-        'Token',
-        'Time',
-        'RoleID',
-        'DateCreated',
-        'DateUpdated',
-        'DateDeleted'
+        'RoleID'
     ];
 
     /**
@@ -102,7 +97,7 @@ class UserModel extends AbstractModel
             throw new InvalidDataException('Incorrect password!');
         }
 
-        $this->loadData();
+        $this->loadData(true);
 
         return $this;
     }
@@ -125,15 +120,15 @@ class UserModel extends AbstractModel
 
         $this->UserID = $this->getLastID();
 
-        $this->loadData();
+        $this->loadData(true);
 
         return $this;
     }
 
     /**
-     * @return void
+     * @param bool $createToken
      */
-    private function loadData(): void
+    private function loadData(bool $createToken = false): void
     {
         $user = $this->databaseController
                 ->select('User', ['*'], ['UserID' => $this->UserID])[0] ?? [];
@@ -144,6 +139,10 @@ class UserModel extends AbstractModel
 
         foreach ($user as $key => $value) {
             $this->$key = $value;
+        }
+
+        if (!$createToken) {
+            return;
         }
 
         $token = new UserTokenModel();
@@ -221,8 +220,34 @@ class UserModel extends AbstractModel
             );
 
         $this->UserID = $userID;
-        $this->loadData();
+        $this->loadData(true);
 
         return $this;
+    }
+
+    /**
+     * @param int $userID
+     * @return $this
+     */
+    public function load(int $userID): UserModel
+    {
+        if (!$userID) {
+            return $this;
+        }
+
+        $this->UserID = $userID;
+        $this->loadData();;
+
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @param array $conditions
+     */
+    public function updateUserByWildcard(array $data, array $conditions): void
+    {
+        $this->databaseController
+            ->update('User', $data, $conditions);
     }
 }

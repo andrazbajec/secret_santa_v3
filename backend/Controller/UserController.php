@@ -36,9 +36,16 @@ class UserController extends AbstractController
             throw new InvalidDataException('Name was not provided!');
         }
 
-        // @TODO - Add email validation
         if (!$email) {
             throw new InvalidDataException('Email was not provided');
+        }
+
+        if (!preg_match(UserEnum::EMAIL_REGEX, $email)) {
+            throw new InvalidDataException('Email is not valid');
+        }
+
+        if ($this->emailExists($email)) {
+            throw new InvalidDataException('Email is already taken!');
         }
 
         if (!$username) {
@@ -179,5 +186,74 @@ class UserController extends AbstractController
         (new ResetPasswordTokenModel())->invalidateToken($token);
 
         return [];
+    }
+
+    /**
+     * @return array
+     * @throws InvalidDataException
+     */
+    public function getUserData(): array
+    {
+        $userID = $this->getCookie('user-id');
+
+        if (!$userID) {
+            throw new InvalidDataException('UserID was not provided!');
+        }
+
+        return $this->userModel
+            ->load($userID)
+            ->toArray();
+    }
+
+    /**
+     * @return array
+     * @throws InvalidDataException
+     */
+    public function saveUserData(): array
+    {
+        $field = $this->getData('field');
+        $value = $this->getData('value');
+        $userID = $this->getCookie('user-id');
+
+        if (!$value) {
+            throw new InvalidDataException('New value was not provided!');
+        }
+
+        if (!$field) {
+            throw new InvalidDataException('Field was not provided!');
+        }
+
+        if (!in_array($field, UserEnum::EDITABLE_FIELDS)) {
+            throw new InvalidDataException('Field is not valid!');
+        }
+
+        if ($field == UserEnum::EMAIL_KEY) {
+            if (!preg_match(UserEnum::EMAIL_REGEX, $value)) {
+                throw new InvalidDataException('Email is not valid');
+            }
+
+            if ($this->emailExists($value)) {
+                throw new InvalidDataException('This email is already taken!');
+            }
+        }
+
+        $this->userModel
+            ->updateUserByWildcard([
+                $field => $value
+            ], [
+                'UserID' => $userID
+            ]);
+
+        return [];
+    }
+
+    /**
+     * @param string $email
+     * @return bool
+     */
+    private function emailExists(string $email): bool
+    {
+        return !!count($this->userModel
+            ->getUserByWildCard(['Email' => $email]));
     }
 }

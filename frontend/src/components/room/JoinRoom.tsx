@@ -1,8 +1,8 @@
-import { Button, Container, Flex, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
-import BaseHelper                                                                                            from "../../helpers/BaseHelper";
-import { useState }                                                                                          from "react";
-import axios                                                                                                 from "axios";
-import { JoinRoomState }                                                                                     from "../../interfaces/RoomInterface";
+import { Button, Container, Flex, FormControl, FormLabel, Heading, Input, InputGroup, InputLeftElement, Stack, useToast } from "@chakra-ui/react";
+import BaseHelper                                                                                                         from "../../helpers/BaseHelper";
+import { useState }                                                                                                       from "react";
+import axios                                                                                                              from "axios";
+import { JoinRoomState }                                                                                                  from "../../interfaces/RoomInterface";
 
 const JoinRoom = () => {
     const toast = useToast();
@@ -55,37 +55,39 @@ const JoinRoom = () => {
                         <Heading>
                             Pridruži se sobi
                         </Heading>
-                        <FormLabel>
-                            Koda Sobe *
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-hashtag"/>}
-                            />
-                            <Input placeholder='Koda sobe'
-                                   type='text'
-                                   name='roomUrl'
-                                   value={getState.roomUrl}
-                                   required
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'roomUrl')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
-                        <FormLabel>
-                            Geslo
-                        </FormLabel>
-                        <InputGroup>
-                            <InputLeftElement pointerEvents="none"
-                                              children={<i className="far fa-lock"/>}
-                            />
-                            <Input placeholder='Geslo'
-                                   type='password'
-                                   name='password'
-                                   value={getState.password}
-                                   onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
-                                   onKeyUp={checkKeyPress}
-                            />
-                        </InputGroup>
+                        <FormControl>
+                            <FormLabel>
+                                Koda Sobe *
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-hashtag"/>}
+                                />
+                                <Input placeholder='Koda sobe'
+                                       type='text'
+                                       name='roomUrl'
+                                       value={getState.roomUrl}
+                                       required
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'roomUrl')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                            <FormLabel>
+                                Geslo
+                            </FormLabel>
+                            <InputGroup>
+                                <InputLeftElement pointerEvents="none"
+                                                  children={<i className="far fa-lock"/>}
+                                />
+                                <Input placeholder='Geslo'
+                                       type='password'
+                                       name='password'
+                                       value={getState.password}
+                                       onChange={event => BaseHelper.inputChange(event, setState, getState, 'password')}
+                                       onKeyUp={checkKeyPress}
+                                />
+                            </InputGroup>
+                        </FormControl>
                         <Button colorScheme='green'
                                 variant='outline'
                                 onClick={joinRoom}
