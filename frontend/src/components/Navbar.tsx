@@ -55,7 +55,7 @@ function Navbar(props: any) {
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link href='/pokazi-sobe'>
+                                        <Link href='/seznam-sob'>
                                             <i className="fal fa-list-ul"/> Seznam Sob
                                         </Link>
                                     </p>

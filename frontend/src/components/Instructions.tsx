@@ -62,18 +62,12 @@ const Instructions = () => {
                                 Tako kot za "Naredi Sobo" in "Pridruži se sobi" kliknete levo zgoraj da se odpre meni
                                 in izberete "Seznam sob".
                                 Odpre se tabela sob.
-                                Na vrhu tabel so trije gumbi.
-                                Odprte sobe vam pokaže seznam vseh javnih odprtih sob.
-                                Soba je odprta do trenutka ko se generirajo imena.
-                                Ko sobo odprete imate možnost da se sobi pridružite (če še niste v sobi).
-                                Če soba nima gesla vas bo takoj pridružilo sobi,
-                                drugače vas bo preusmerilo na "Pridruži se sobi" stran,
-                                kjer je koda sobe že izpolnjena, za geslo pa boste morali kontaktirati admina sobe.
-                                Če ste se sobi pridružili po nesreči imate tudi možnost da sobo zapustite.
-                                V poteku so sobe v katerih ste pridruženi in so imena že generirana.
-                                Te sobe ne morete zapustiti.
-                                Ko je soba v poteku se vam izpiše ime koga ste dobili.
-                                Ko se izteče čas obdarovanja pa se soba zapiše v Zgodovino sob.
+                                Ko je miška na sobi se vam pokažejo podatki sob.
+                                Najprej je kdo je sobo naredil,
+                                potem je koliko ljudi je trenutno v sobi,
+                                za tem je znak ali je soba odprta, v poteku ali zaprta,
+                                na dnu pa je še en gumb kateri odpre sobo.
+                                Ko je soba odprta vidite vse podatke o njej.
                             </div>
                         </div>
                     </Stack>

@@ -2,7 +2,7 @@ CREATE TABLE Room
 (
     RoomID         INT PRIMARY KEY AUTO_INCREMENT,
     UserID         INT  NOT NULL,
-    Title          TEXT NOT NULL,
+    Title          VARCHAR(20) NOT NULL,
     Status         ENUM ('open', 'in progress', 'ended') DEFAULT 'open',
     RoomUrl        INT  NOT NULL,
     Password       TEXT,

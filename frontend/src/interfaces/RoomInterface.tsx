@@ -32,12 +32,23 @@ export interface RoomListDB {
     rooms: RoomListDBElement[];
 }
 
+export interface UserRoomListDB {
+    userRooms: RoomListDBElement[];
+}
+
 export interface RoomListDBElement {
     RoomID: number;
     Title: string;
     RoomUrl: number;
     Users: number;
     Author: string;
+    Status: RoomStatus
+}
+
+export enum RoomStatus {
+    OPEN = 'open',
+    IN_PROGRESS = 'in progress',
+    ENDED = 'ended'
 }
 
 export interface RoomDataResponse {
