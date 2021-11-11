@@ -62,9 +62,9 @@ const RoomList = () => {
                                             </p>
                                             <p>
                                                 {
-                                                    room.Status == RoomStatus.OPEN
+                                                    room.Status === RoomStatus.OPEN
                                                         ? <i className="fal fa-door-open room-icon open"/>
-                                                        : room.Status == RoomStatus.IN_PROGRESS
+                                                        : room.Status === RoomStatus.IN_PROGRESS
                                                             ? <i className="fal fa-door-open room-icon in-progress"/>
                                                             : <i className="fal fa-door-open room-icon ended"/>
                                                 }

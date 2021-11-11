@@ -27,49 +27,67 @@ const Navbar = (props: any) => {
                             !props.authenticated
                                 ? <div>
                                     <p>
-                                        <Link to='/register'>
+                                        <Link to='/register'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-user-plus"/> Registriraj se
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/login'>
+                                        <Link to='/login'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-sign-in"/> Vpiši se
                                         </Link>
                                     </p>
                                 </div>
                                 : <div>
                                     <p>
-                                        <Link to='/'>
+                                        <Link to='/'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-home-lg-alt"/> Domov
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/naredi-sobo'>
+                                        <Link to='/naredi-sobo'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-plus-square"/> Naredi sobo
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/pridruzi-se-sobi'>
+                                        <Link to='/pridruzi-se-sobi'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-arrow-square-right"/> Pridruži se sobi
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/seznam-sob'>
+                                        <Link to='/seznam-sob'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-list-ul"/> Seznam sob
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/navodila'>
+                                        <Link to='/navodila'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-info-square"/> Navodila
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/nastavitve'>
+                                        <Link to='/nastavitve'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-cog"/> Nastavitve
                                         </Link>
                                     </p>
                                     <p>
-                                        <Link to='/logout'>
+                                        <Link to='/logout'
+                                              onClick={onClose}
+                                        >
                                             <i className="fal fa-sign-out"/> Izpiši se
                                         </Link>
                                     </p>

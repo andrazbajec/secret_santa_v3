@@ -157,40 +157,41 @@ const CreateRoom = () => {
                                        onKeyUp={checkKeyPress}
                                 />
                             </InputGroup>
-                            <InputGroup className='checkboxes'>
-                                <div className='d-flex float-left'>
-                                    <FormLabel htmlFor='shouldJoin'
-                                               className='checkbox-label'
-                                    >
-                                        Sodeluj
-                                    </FormLabel>
-                                    <label>
-                                        <Input type='checkbox'
-                                               id='shouldJoin'
-                                               onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
-                                        />
-                                        <span/>
-                                        <i className='indicator'/>
-                                    </label>
-                                </div>
-                                <div className='d-flex float-right'>
-                                    <FormLabel htmlFor='isPrivate'
-                                               className='checkbox-label'
-                                    >
-                                        Privat soba
-                                    </FormLabel>
-                                    <label>
-                                        <Input type='checkbox'
-                                               id='isPrivate'
-                                               onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
-                                        />
-                                        <span/>
-                                        <i className='indicator'/>
-                                    </label>
-                                </div>
-                                <div className='clear-both'/>
-                            </InputGroup>
                         </FormControl>
+                        <InputGroup className='checkboxes'>
+                            <div className='d-flex float-left'>
+                                <FormLabel htmlFor='shouldJoin'
+                                           className='checkbox-label'
+                                >
+                                    Sodeluj
+                                </FormLabel>
+                                <label>
+                                    <Input type='checkbox'
+                                           id='shouldJoin'
+                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'shouldJoin')}
+                                    />
+                                    <span/>
+                                    <i className='indicator'/>
+                                </label>
+                            </div>
+                            <div className='d-flex float-right'>
+                                <FormLabel htmlFor='isPrivate'
+                                           className='checkbox-label'
+                                >
+                                    Privat soba
+                                </FormLabel>
+                                <label>
+                                    <Input type='checkbox'
+                                           id='isPrivate'
+                                           onChange={() => BaseHelper.toggleCheckbox(getState, setState, 'isPrivate')}
+                                    />
+                                    <span/>
+                                    <i className='indicator'/>
+                                </label>
+                            </div>
+                            <div className='clear-both'/>
+                        </InputGroup>
+
                         <Button colorScheme='green'
                                 variant='outline'
                                 type='submit'
