@@ -59,9 +59,9 @@ const Home = () => {
                                             </p>
                                             <p>
                                                 {
-                                                    userRoom.Status == RoomStatus.OPEN
+                                                    userRoom.Status === RoomStatus.OPEN
                                                         ? <i className="fal fa-door-open room-icon open"/>
-                                                        : userRoom.Status == RoomStatus.IN_PROGRESS
+                                                        : userRoom.Status === RoomStatus.IN_PROGRESS
                                                             ? <i className="fal fa-door-open room-icon in-progress"/>
                                                             : <i className="fal fa-door-open room-icon ended"/>
                                                 }
